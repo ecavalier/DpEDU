@@ -1,3 +1,11 @@
+/*!
+ * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
+ * Code licensed under the Apache License v2.0.
+ * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+ */
+
+/* Toggle Styles */
+
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -11,7 +19,6 @@
 }
 
 #sidebar-wrapper {
-    margin-top: 30px;
     z-index: 1000;
     position: fixed;
     left: 250px;
@@ -31,6 +38,7 @@
 }
 
 #page-content-wrapper {
+    margin-top: 30px;
     width: 100%;
     padding: 15px;
 }
@@ -106,6 +114,7 @@
     }
 
     #page-content-wrapper {
+        margin-top: 30px;
         padding: 20px;
     }
 

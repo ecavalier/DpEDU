@@ -1,19 +1,11 @@
 package model
 
-import javax.persistence.Entity
-import play.db.ebean.Model
+import com.novus.salat.annotations.raw.Key
+import org.bson.types.ObjectId
 
-/**
- * Created by Ivan Yatcuba on 9/6/14.
- */
-case class UserData(email: String, password: String)
-@Entity
-class User( var email: String,
-            var password: String,
-            var fullName: String
-            ) extends Model {
 
-  var isAdmin: Boolean = false
-
-  def this() = this(null, null, null)
+abstract class User(@Key("_id") id: ObjectId = new ObjectId, email: String, password: String, fullName:String) {
+  val isAdmin: Boolean = false
 }
+
+

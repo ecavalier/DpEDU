@@ -3,10 +3,23 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.index
-GET        /profile             controllers.Login.login
+GET         /                                    controllers.Application.index
+GET         /login                               controllers.Login.login
+GET         /admin/profile                       controllers.Login.openProfile
+
+GET         /admin/faculties                     controllers.Admin.faculty
+POST        /admin/faculties/save                controllers.Admin.insertFaculty
+GET         /admin/faculties/:id/delete          controllers.Admin.deleteFaculty(id)
+GET         /admin/faculties/:id/details         controllers.Admin.showFacultyDepartments(id)
+GET         /admin/faculties/:id/groups          controllers.Admin.showFacultyGroups(id)
+
+POST        /admin/departments/save/:id          controllers.Admin.insertDepartment(id)
+GET         /admin/departments/:id/delete        controllers.Admin.deleteDepartment(id, facultyId)
+
+POST        /admin/groups/save/:id               controllers.Admin.insertGroup(id)
+GET         /admin/groups/:id/delete             controllers.Admin.deleteGroup(id, facultyId)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file                        controllers.Assets.at(path="/public", file)
 
     

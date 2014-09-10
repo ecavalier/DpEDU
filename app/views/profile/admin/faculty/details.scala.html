@@ -1,0 +1,16 @@
+@(faculty: model.Faculty, tab: Html)
+<div class="row">
+    <div class="col-xs-6 col-md-3">
+        <a href="#" class="thumbnail">
+            <img src="@routes.Assets.at("images/sample.jpg")" style="height: 180px; width: 100%; display: block;"  alt="100%x180">
+        </a>
+    </div>
+    <div class="col-xs-6 col-md-3">
+        <p>Name:&nbsp;@faculty.name</p>
+        <p>Description:&nbsp;@faculty.description</p>
+        <p><a class="btn btn-primary" data-toggle="modal" data-target="#facultyForm">Edit</a></p>
+    </div>
+</div>
+<hr/>
+@form("Edit Faculty", null)
+@tab

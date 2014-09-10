@@ -1,0 +1,27 @@
+@(groups: List[model.Group])
+<div class="panel panel-default">
+    <div class="panel-heading">Groups List</div>
+
+        <!-- Table -->
+    <table class="table">
+        <tr>
+            <td>#</td>
+            <td>Name</td>
+            <td>Department</td>
+            <td>Action</td>
+        </tr>
+        @if(groups != null){
+            @for(g <- groups) {
+                <tr>
+                    <td>@g.id</td>
+                    <td>@g.name</td>
+                    <td>@model.Department.find(g.departmentId.toString).get.name</td>
+                    <td>
+                        <a class="btn btn-success" href="#">Edit</a>&nbsp;
+                        <a class="btn btn-danger" href="@routes.Admin.deleteGroup(g.id.toString, g.departmentId.toString)">Remove</a>
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
