@@ -1,0 +1,27 @@
+
+<div class="panel panel-default">
+    <div class="panel-heading">Departments List</div>
+        <!-- Table -->
+    <table class="table">
+        <tr>
+            <td class="col-md-3">Name</td>
+            <td class="col-md-6">Description</td>
+            <td class="col-md-3">Action</td>
+        </tr>
+            @for(d <- model.Department.findAll()) {
+                <tr>
+                    <td><a href="@routes.Dean.detailsDepartment(d.id.toString)">@d.name</a></td>
+                    <td>@d.description</td>
+                    <td><a class="btn btn-danger" href="@routes.Dean.deleteDepartment(d.id.toString)">Remove</a></td>
+                </tr>
+            }
+
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#departmentForm">Add New</a>
+    </div>
+</div>
+@form("Create New Department", null)

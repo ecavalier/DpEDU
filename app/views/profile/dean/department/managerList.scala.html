@@ -1,0 +1,25 @@
+@(departmentId: String)
+<div class="panel panel-default">
+    <div class="panel-heading">Departments List</div>
+        <!-- Table -->
+    <table class="table">
+        <tr>
+            <td class="col-md-3">Name</td>
+            <td class="col-md-3">Action</td>
+        </tr>
+        @for(m <- model.Department.find(departmentId).get.managers) {
+            <tr>
+                <td><a>@model.users.User.find(m).get.email</a></td>
+                <td><a class="btn btn-danger">Remove</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#managerForm">Add New</a>
+    </div>
+</div>
+@managerForm("Add Department Manager", null, departmentId)
