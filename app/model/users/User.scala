@@ -13,6 +13,7 @@ trait User{
   @Key("_id")val id: ObjectId
   val email: String
   val password: String
+  var theme: String
 }
 
 object User extends ModelCompanion[User, ObjectId] {

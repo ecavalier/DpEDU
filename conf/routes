@@ -9,13 +9,20 @@ GET         /admin/profile                          controllers.Login.authentica
 
 
 GET         /dean/lookAndFeel                       controllers.Dean.openLookAndFeel()
-GET         /dean/departments                       controllers.Dean.departmentList
-POST        /dean/departments/insert                controllers.Dean.insertDepartment
+GET         /dean/departments                       controllers.Dean.departmentList()
+POST        /dean/departments/insert                controllers.Dean.insertDepartment()
 GET         /dean/departments/remove/:id            controllers.Dean.deleteDepartment(id)
 GET         /dean/departments/deatils/:id           controllers.Dean.detailsDepartment(id)
 POST        /dean/departments/addManager/:id        controllers.Dean.addManager(id)
-GET        /dean/theme/:theme                      controllers.Dean.changeTheme(theme)
-GET         /dean/profile/:id                             controllers.Dean.profileInit(id)
+GET         /dean/theme/:theme                      controllers.Dean.changeTheme(theme)
+GET         /dean/profile/:id                       controllers.Dean.profileInit(id)
+GET         /dean/profile                           controllers.Dean.profileRedirectImpl()
+
+GET         /department/lookAndFeel                 controllers.DepartmentController.openLookAndFeel()
+GET         /department/theme/:theme                controllers.DepartmentController.changeTheme(theme)
+GET         /department/profile/:id                 controllers.DepartmentController.profileInit(id)
+GET         /department/profile                     controllers.DepartmentController.profileRedirectImpl()
+GET         /department/groups/                     controllers.DepartmentController.groupList()
 
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                           controllers.Assets.at(path="/public", file)

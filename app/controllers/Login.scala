@@ -29,7 +29,7 @@ object Login extends Controller {
     val user = User.findByEmail(session.get("username").get).get
     user match {
       case _: DepartmentManager =>
-        Ok(views.html.profile.department.departmentLayout(views.html.profile.department.profile()))
+        Redirect(routes.DepartmentController.profileInit(user.id.toString))
       case _: DeanManager =>
         Redirect(routes.Dean.profileInit(user.id.toString))
       case _: Student =>

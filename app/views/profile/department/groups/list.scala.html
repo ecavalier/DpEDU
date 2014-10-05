@@ -1,0 +1,33 @@
+@()(implicit session: play.api.mvc.Session)
+<div class="panel panel-default">
+    <div class="panel-heading">Group List</div>
+        <!-- Table -->
+    <table class="table">
+        <tr>
+            <td class="col-md-2">Name</td>
+            <td class="col-md-2">Students Count</td>
+            <td class="col-md-3">Curator</td>
+            <td class="col-md-3">Elder</td>
+            <td class="col-md-2">Action</td>
+        </tr>
+        @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
+                .get.asInstanceOf[model.users.DepartmentManager].departmentId)) {
+            <tr>
+                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.name</a></td>
+                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.students.size</a></td>
+                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.elder.email</a></td>
+                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.elder.email</a></td>
+                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.name</a></td>
+                <td><a class="btn btn-danger" href="@routes.Dean.deleteDepartment(g.id.toString)">Remove</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#groupForm">Add New</a>
+    </div>
+</div>
+@form("Create New Group", null)

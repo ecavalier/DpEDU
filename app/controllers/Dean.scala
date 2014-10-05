@@ -1,16 +1,20 @@
 package controllers
 
-import play.api.mvc.{Action, Controller}
+import play.api.mvc.Action
 import play.api.data.Forms._
 import play.api.data.Form
-import play.api.templates.Html
 import model.Department
 import model.users._
 import model.users.DepartmentManager
-import model.users.DepartmentManager
-import play.mvc.Http
 
-object Dean extends Controller {
+object Dean extends UserController {
+
+  var theme = "bootstrap.min.css"
+  layout = views.html.profile.dean.adminLayout
+  profile = views.html.profile.dean.profile
+  lookAndFeelPath = views.html.profile.dean.lookAndFeel
+  profileRedirect =   Redirect(routes.Dean.profileRedirectImpl())
+
   val departmentForm = Form(
     tuple(
       "name" -> text,
@@ -24,12 +28,6 @@ object Dean extends Controller {
       "password" -> text
     )
   )
-   var theme = "bootstrap.min.css"
-  def profileInit(id: String) = Action{implicit request =>
-    val user = User.find(id).get.asInstanceOf[DeanManager]
-    theme = user.theme
-    changeView(views.html.profile.dean.profile())
-  }
 
   def departmentList = Action {
     changeView(views.html.profile.dean.department.list())
@@ -55,25 +53,9 @@ object Dean extends Controller {
   def addManager(departmentId: String) =   Action {implicit request =>
     val (email, password) = managerForm.bindFromRequest().get
     val department = Department.find(departmentId).get
-    val manager = new DepartmentManager(email = email, password = password)
+    val manager = new DepartmentManager(email = email, password = password, departmentId=department.id.toString)
     User.insert(manager)
     Department.save(department.copy(managers = department.managers.++: (List(manager.id.toString))))
     Redirect(routes.Dean.detailsDepartment(department.id.toString))
   }
-
-  def changeTheme(theme: String) = Action {implicit request =>
-    val user = User.findByEmail(session.get("username").get).get
-    user.asInstanceOf[DeanManager].theme = theme
-    User.save(user)
-    this.theme = theme
-    Redirect(routes.Dean.departmentList())
-  }
-
-  def openLookAndFeel = Action {
-    changeView(views.html.profile.dean.lookAndFeel())
-  }
-
-  def changeView(view: Html) = Ok(views.html.profile.dean.adminLayout(view, theme))
-
-
 }
