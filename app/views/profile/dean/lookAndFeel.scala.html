@@ -1,7 +1,97 @@
-<div>
-    <a href="@routes.Dean.changeTheme("bootstrap.min.css")">Default</a><br/>
-    <a href="@routes.Dean.changeTheme("darkly.min.css")">Darkly</a><br/>
-    <a href="@routes.Dean.changeTheme("simplex.min.css")">Simply</a><br/>
-    <a href="@routes.Dean.changeTheme("spaceLab.min.css")">Space Lab</a><br/>
-    !
-</div>
+@()(implicit session: play.api.mvc.Session, req: RequestHeader)
+@user= @{model.users.User.findByEmail(session.get("username").get).get.asInstanceOf[model.users.DeanManager]}
+    <style>
+        /*upload */
+
+        .fileUpload {
+        position: relative;
+        overflow: hidden;
+        margin: 10px;
+        }
+        .fileUpload input.upload {
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 0;
+        padding: 0;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0;
+        filter: alpha(opacity=0);
+        }
+    </style>
+<div class="row">
+    @helper.form(action = routes.DeanController.updateProfile(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+        <div class="col-md-6">
+        <div class="form-group">
+            <label for="email" class="control-label col-md-2">Email</label>
+            <div class="col-md-8">
+                <input name="email" class="form-control" value="@user.email">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label col-md-2">Password</label>
+            <div class="col-md-8">
+                <input type="password" name="password" class="form-control"
+                value="@user.password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label col-md-2">Theme</label>
+            <div class="col-md-8">
+                <select name="theme" class="form-control">
+                    <option value="bootstrap.min.css" @if(user.theme == "bootstrap.min.css"){selected}>Default</option>
+                    <option value="darkly.min.css" @if(user.theme == "darkly.min.css"){selected}>Darkly</option>
+                    <option value="simplex.min.css" @if(user.theme == "simplex.min.css"){selected}>Simply</option>
+                    <option value="spaceLab.min.css" @if(user.theme == "spaceLab.min.css"){selected}>Space Lab</option>
+                </select>
+            </div>
+        </div>
+        </div>
+        <div class="col-md-6">
+            <img   id="uploadFile" src="@routes.DeanController.picture(user.avatar)" style="width : 120px; height:
+            120px" class="img-circle"> <br/>
+            <div class="fileUpload btn btn-primary">
+                <span>Upload</span>
+                <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="avatar"
+                value="@routes.DeanController.picture(user.avatar)">
+            </div>
+
+        </div>
+    </div>
+        <div class="row">
+            <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+    }
+<script type="text/javascript">
+
+function showMyImage(fileInput) {
+var files = fileInput.files;
+
+var url = fileInput.value;
+var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+
+if ((ext != "jpg")) {fileInput.empty; return;}
+
+for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var imageType = /image.*/;
+    if (!file.type.match(imageType)) {
+        continue;
+    }
+    var img=document.getElementById("uploadFile");
+    img.file = file;
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+        return function(e) {
+            aImg.src = e.target.result;
+        };
+    })(img);
+        reader.readAsDataURL(file);
+    }
+}
+</script>
+
+

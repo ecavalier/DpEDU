@@ -1,27 +1,41 @@
-
-<div class="panel panel-default">
+<div class="panel panel-primary">
     <div class="panel-heading">Departments List</div>
         <!-- Table -->
     <table class="table">
-        <tr>
-            <td class="col-md-3">Name</td>
-            <td class="col-md-6">Description</td>
-            <td class="col-md-3">Action</td>
-        </tr>
-            @for(d <- model.Department.findAll()) {
-                <tr>
-                    <td><a href="@routes.Dean.detailsDepartment(d.id.toString)">@d.name</a></td>
-                    <td>@d.description</td>
-                    <td><a class="btn btn-danger" href="@routes.Dean.deleteDepartment(d.id.toString)">Remove</a></td>
-                </tr>
-            }
+        <thead>
+            <tr>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-6">Description</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+        </thead>
+        @for(d <- model.Department.findAll()) {
+            <tr>
+                <td><a href="@routes.DeanController.detailsDepartment(d.id.toString)">@d.name</a></td>
+                <td>@d.description</td>
+                <td><a class="btn btn-danger" href="@routes.DeanController.deleteDepartment(d.id.toString)">Remove</a>
+                    <a class="btn btn-primary" onclick="onEdit('@d.id')" >Edit</a></td>
+            </tr>
+        }
 
     </table>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary" data-toggle="modal" data-target="#departmentForm">Add New</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
     </div>
 </div>
-@form("Create New Department", null)
+@form("Create New Department", "createForm", "Create", null, routes.DeanController.insertDepartment())
+<div id="editContent"></div>
+
+<script>
+    function onEdit(id){
+        $.get(
+            "/dean/departments/updateDepartmentForm/"+id,
+            function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+            "html"
+        );
+    }
+</script>
+

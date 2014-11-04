@@ -3,27 +3,39 @@
 # ~~~~
 
 # Home page
-GET         /                                       controllers.Application.index
-GET         /login                                  controllers.Login.login
-GET         /admin/profile                          controllers.Login.authenticate
+GET         /                                                 controllers.Application.index
+GET         /login                                            controllers.LoginController.login
+GET         /logout                                            controllers.LoginController.logOut
+GET         /admin/profile                                    controllers.LoginController.authenticate
 
 
-GET         /dean/lookAndFeel                       controllers.Dean.openLookAndFeel()
-GET         /dean/departments                       controllers.Dean.departmentList()
-POST        /dean/departments/insert                controllers.Dean.insertDepartment()
-GET         /dean/departments/remove/:id            controllers.Dean.deleteDepartment(id)
-GET         /dean/departments/deatils/:id           controllers.Dean.detailsDepartment(id)
-POST        /dean/departments/addManager/:id        controllers.Dean.addManager(id)
-GET         /dean/theme/:theme                      controllers.Dean.changeTheme(theme)
-GET         /dean/profile/:id                       controllers.Dean.profileInit(id)
-GET         /dean/profile                           controllers.Dean.profileRedirectImpl()
 
-GET         /department/lookAndFeel                 controllers.DepartmentController.openLookAndFeel()
-GET         /department/theme/:theme                controllers.DepartmentController.changeTheme(theme)
-GET         /department/profile/:id                 controllers.DepartmentController.profileInit(id)
-GET         /department/profile                     controllers.DepartmentController.profileRedirectImpl()
-GET         /department/groups/                     controllers.DepartmentController.groupList()
+
+GET         /dean/lookAndFeel                                 controllers.DeanController.openLookAndFeel()
+GET         /dean/departments                                 controllers.DeanController.departmentList()
+POST        /dean/departments/insert                          controllers.DeanController.insertDepartment()
+GET         /dean/departments/remove/:id                      controllers.DeanController.deleteDepartment(id)
+GET         /dean/departments/update/:id                      controllers.DeanController.saveDepartment(id)
+GET         /dean/departments/updateDepartmentForm/:id        controllers.DeanController.getDepartmentEditForm(id)
+GET         /dean/departments/updateManagerForm/:id           controllers.DeanController.getManagerEditForm(id)
+POST        /dean/departments/saveManager/:id                 controllers.DeanController.saveManager(id)
+GET         /dean/departments/deatils/:id                     controllers.DeanController.detailsDepartment(id)
+POST        /dean/departments/addManager/:id                  controllers.DeanController.addManager(id)
+GET         /dean/departments/removeManager/:id               controllers.DeanController.removeManager(id)
+GET         /dean/theme/:theme                                controllers.DeanController.changeTheme(theme)
+GET         /dean/profile/:id                                 controllers.DeanController.profileInit(id)
+GET         /dean/profile                                     controllers.DeanController.profileRedirectImpl()
+POST        /dean/updateProfile                               controllers.DeanController.updateProfile()
+GET         /picture/:name                                    controllers.DeanController.picture(name: String)
+
+GET         /department/lookAndFeel                           controllers.DepartmentController.openLookAndFeel()
+GET         /department/theme/:theme                          controllers.DepartmentController.changeTheme(theme)
+GET         /department/profile/:id                           controllers.DepartmentController.profileInit(id)
+GET         /department/profile                               controllers.DepartmentController.profileRedirectImpl()
+GET         /department/groups/                               controllers.DepartmentController.groupList()
+POST        /department/groups/insert                         controllers.DepartmentController.insertDepartment()
+
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                           controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                     controllers.Assets.at(path="/public", file)
 

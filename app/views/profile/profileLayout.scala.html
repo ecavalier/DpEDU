@@ -1,19 +1,18 @@
-@(styles: Html)(menu: Html)(header: Html)(content: Html)(scripts: Html)
-!DOCTYPE html>
+@(user: model.users.User)(menu: Html)(content: Html)
 <html lang="en">
-<head>
+    <head>
+        @views.html.profile.styles(user.theme)
+        @views.html.profile.scripts()
+        <title>Profile</title>
+    </head>
 
-    @styles
-    <title>Profile</title>
-</head>
+    <body>
+        @views.html.profile.header(user)
+        <div id="wrapper">
+            @menu
 
-<body>
-    @header
-    <div id="wrapper">
-        @menu
+            @content
+        </div>
 
-        @content
-    </div>
-    @scripts
-</body>
+    </body>
 </html>

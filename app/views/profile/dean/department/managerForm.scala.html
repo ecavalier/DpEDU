@@ -1,35 +1,23 @@
-@(title: String, manager: model.users.DepartmentManager, departmentId: String)
-<link href="@routes.Assets.at("stylesheets/admin/faculty_form.css")" rel="stylesheet">
-<div class="modal fade " id="managerForm" >
-    <div class="col-md-5 col-md-offset-3">
-        <div class="row">
-            <div class="panel panel-default faculty-form ">
-                <div class="panel-heading">
-                    <h4 class="form-signin-heading" style="margin-bottom: 10px">@title</h4>
-                </div>
-                <div class="panel-body">
-                @helper.form(action = routes.Dean.addManager(departmentId), 'class -> "form-horizontal") {
+@(title: String, id:String, btn: String, manager: model.users.DepartmentManager, action: Call)
+@views.html.profile.genericForm(title, id, btn) {
+                @helper.form(action = action, 'class -> "form-horizontal") {
                     <div class="form-group">
                         <label for="email" class="control-label col-md-2">Email</label>
                         <div class="col-md-8">
-                            <input name="email" class="form-control" value="@if(manager != null){@manager.email}">
+                            <input name="email" class="form-control" value="@if(manager != null) {@manager.email}">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="control-label col-md-2">Password</label>
                         <div class="col-md-8">
                             <input type="password" name="password" class="form-control"
-                            value="@if(manager != null){@manager.password}">
+                            value="@if(manager != null) {@manager.password}">
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-8 col-md-12">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">@btn</button>
                         </div>
                     </div>
                 }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+}

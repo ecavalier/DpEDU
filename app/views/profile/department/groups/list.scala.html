@@ -11,18 +11,17 @@
             <td class="col-md-2">Action</td>
         </tr>
         @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
-                .get.asInstanceOf[model.users.DepartmentManager].departmentId)) {
+                .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
             <tr>
-                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.name</a></td>
-                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.students.size</a></td>
-                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.elder.email</a></td>
-                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.elder.email</a></td>
-                <td><a href="@routes.Dean.detailsDepartment(g.id.toString)">@g.name</a></td>
-                <td><a class="btn btn-danger" href="@routes.Dean.deleteDepartment(g.id.toString)">Remove</a></td>
+                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.name</a></td>
+                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.elder</a></td>
+                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.elder</a></td>
+                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.name</a></td>
+                <td><a class="btn btn-danger" href="@routes.DeanController.deleteDepartment(g.id.toString)">Remove</a></td>
             </tr>
         }
 
-    </table>
+        </table>
 </div>
 
 <div class="row">

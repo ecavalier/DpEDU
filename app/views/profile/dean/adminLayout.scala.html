@@ -1,10 +1,14 @@
-@(content: Html, theme: String)
-@views.html.profile.profileLayout{@styles(theme)}{@header()}{@menu()}{<div id="page-content-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
+@(content: Html, user: model.users.User)
+@views.html.profile.profileLayout(user) {
+    @menu()
+} {
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
                 @content
+                </div>
             </div>
         </div>
     </div>
-</div>}{@scripts()}
+}

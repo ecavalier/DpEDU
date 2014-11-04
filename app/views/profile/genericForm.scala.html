@@ -1,0 +1,15 @@
+@(title: String, id: String, btn: String)(contentForm: Html)
+<div class="modal fade " id="@id" >
+    <div class="col-md-5 col-md-offset-3">
+        <div class="row">
+            <div class="panel panel-default faculty-form ">
+                <div class="panel-heading">
+                    <h4 class="form-signin-heading" style="margin-bottom : 10 px">@title</h4>
+                </div>
+                <div class="panel-body">
+                    @contentForm
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

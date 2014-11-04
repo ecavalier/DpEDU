@@ -1,6 +1,6 @@
 package model.users
 
-import org.bson.types.ObjectId
+import com.mongodb.casbah.commons.TypeImports.ObjectId
 import model.users.StudentStatus.StudentStatus
 
 
@@ -12,7 +12,9 @@ object StudentStatus extends Enumeration {
 case class Student(id: ObjectId = new ObjectId,
                    email: String,
                    password: String,
-                   var theme: String =  "bootstrap.min.css",
+                   var theme: String = "bootstrap.min.css",
                    isElder: Boolean,
-                   status: StudentStatus) extends User
+                   status: StudentStatus,
+                   group: ObjectId,
+                   var avatar: String = "@routes.Assets.at(\"images/anonymous.jpg\")") extends User
 

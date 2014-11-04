@@ -1,25 +1,41 @@
 @(departmentId: String)
-<div class="panel panel-default">
-    <div class="panel-heading">Departments List</div>
-        <!-- Table -->
-    <table class="table">
-        <tr>
-            <td class="col-md-3">Name</td>
-            <td class="col-md-3">Action</td>
-        </tr>
-        @for(m <- model.Department.find(departmentId).get.managers) {
-            <tr>
-                <td><a>@model.users.User.find(m).get.email</a></td>
-                <td><a class="btn btn-danger">Remove</a></td>
-            </tr>
-        }
-
-    </table>
-</div>
-
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary" data-toggle="modal" data-target="#managerForm">Add New</a>
+<div class="panel panel-primary">
+    <div class="panel-heading">Managers List</div>
+        <!-- Table -->
+    <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+        </thead>
+        @for(m <- model.Department.getManagers(departmentId)) {
+            <tr>
+                <td>@m.email</td>
+                <td><a class="btn btn-danger" href="@routes.DeanController.removeManager(m.id.toString)">Remove</a>
+                    <a class="btn btn-primary" onclick="onEdit('@m.id')">Edit</a></td>
+            </tr>
+        }
+        </table>
+</div>
+</div>
+</div>  <br/>
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
     </div>
 </div>
-@managerForm("Add Department Manager", null, departmentId)
+@managerForm("Add Department Manager", "createForm", "Create", null, routes.DeanController.addManager(departmentId))
+<div id="editContent"></div>
+
+<script>
+function onEdit(id){
+    $.get(
+        "/dean/departments/updateManagerForm/"+id,
+        function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+        "html"
+    );
+}
+</script>
