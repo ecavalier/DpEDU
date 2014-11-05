@@ -1,0 +1,74 @@
+@(title: String, id: String, btn: String, room: model.Room, action: Call)
+@views.html.profile.genericForm(title, id){
+    @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+        <div class="col-md-6">
+            <br/>
+            <div class="form-group">
+                <label for="name" class="control-label col-md-2">Name</label>
+                <div class="col-md-8">
+                    <input name="name" class="form-control"
+                    @if(room != null && room.name){value="@room.name"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="roomType" class="control-label col-md-2">Type</label>
+                <div class="col-md-8">
+                    <select name="roomType" class="form-control">
+                    @for(t <- model.RoomType.values) {
+                        <option value="@t.toString" @if(room != null && room.roomType == t.toString){selected}>@t.toString</option>
+                    }
+                    </select>
+                </div>
+            </div>
+            </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="picture" class="control-label col-md-2">Preview</label><br/><br/>
+                <div class="col-md-8">
+                    <img   id="uploadFile"
+                    @if(room != null && room.picture != ""){src="@routes.DeanController.picture(room.picture)"}else{
+                        src="@routes.Assets.at("images/room.jpg")"}style="height: 120px" class="img-thumbnail"> <br/>
+                    <div class="fileUpload btn btn-primary">
+                        <span>Upload</span>
+                        <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="picture"
+                        value="">
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="col-md-6">
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">@btn</button>
+        </div>
+        </div>
+    }
+    <script type="text/javascript">
+
+    function showMyImage(fileInput) {
+    var files = fileInput.files;
+
+    var url = fileInput.value;
+    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+
+    if ((ext != "jpg")) {fileInput.empty; return;}
+
+    for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var imageType = /image.*/;
+    if (!file.type.match(imageType)) {
+    continue;
+    }
+    var img=document.getElementById("uploadFile");
+    img.file = file;
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+    return function(e) {
+    aImg.src = e.target.result;
+    };
+    })(img);
+    reader.readAsDataURL(file);
+    }
+    }
+    </script>
+
+}

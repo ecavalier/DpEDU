@@ -1,5 +1,5 @@
 @(title: String, id:String, btn: String, manager: model.users.DepartmentManager, action: Call)
-@views.html.profile.genericForm(title, id, btn) {
+@views.html.profile.genericForm(title, id) {
                 @helper.form(action = action, 'class -> "form-horizontal") {
                     <div class="form-group">
                         <label for="email" class="control-label col-md-2">Email</label>

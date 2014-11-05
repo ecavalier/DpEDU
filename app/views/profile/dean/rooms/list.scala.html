@@ -1,0 +1,46 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">Rooms List</div>
+        <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">Type</th>
+                <th class="col-md-3">Preview</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+        </thead>
+        @for(r <- model.Room.findAll()) {
+            <tr>
+                <td>@r.name</td>
+                <td>@r.roomType</td>
+                <td><img  @if(r.picture!=""){src="@routes.DeanController.picture(r.picture)"}else{src="@routes.Assets.at("images/room.jpg")"} style="height :
+                    120px;" class="img-thumbnail"></td>
+                <td><a class="btn btn-danger" href="@routes.DeanController.removeRoom(r.id.toString)">Remove</a>
+                    <a class="btn btn-primary" onclick="onEdit('@r.id')" >Edit</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
+    </div>
+</div>
+
+<div id="editContent"></div>
+
+@form("Create New Room", "createForm", "Create", null, routes.DeanController.addRoom())
+<script>
+    function onEdit(id){
+        $.get(
+            "/dean/rooms/updateRoomForm/"+id,
+            function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+            "html"
+        );
+    }
+</script>
+
+

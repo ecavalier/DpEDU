@@ -5,7 +5,7 @@
 # Home page
 GET         /                                                 controllers.Application.index
 GET         /login                                            controllers.LoginController.login
-GET         /logout                                            controllers.LoginController.logOut
+GET         /logout                                           controllers.LoginController.logOut
 GET         /admin/profile                                    controllers.LoginController.authenticate
 
 
@@ -22,6 +22,11 @@ POST        /dean/departments/saveManager/:id                 controllers.DeanCo
 GET         /dean/departments/deatils/:id                     controllers.DeanController.detailsDepartment(id)
 POST        /dean/departments/addManager/:id                  controllers.DeanController.addManager(id)
 GET         /dean/departments/removeManager/:id               controllers.DeanController.removeManager(id)
+GET         /dean/rooms                                       controllers.DeanController.roomsList()
+POST        /dean/rooms/insert                                controllers.DeanController.addRoom()
+POST        /dean/rooms/update/:id                            controllers.DeanController.saveRoom(id)
+GET         /dean/rooms/updateRoomForm/:id                    controllers.DeanController.getRoomEditForm(id)
+GET         /dean/rooms/remove/:id                   controllers.DeanController.removeRoom(id)
 GET         /dean/theme/:theme                                controllers.DeanController.changeTheme(theme)
 GET         /dean/profile/:id                                 controllers.DeanController.profileInit(id)
 GET         /dean/profile                                     controllers.DeanController.profileRedirectImpl()

@@ -1,25 +1,5 @@
 @()(implicit session: play.api.mvc.Session, req: RequestHeader)
 @user= @{model.users.User.findByEmail(session.get("username").get).get.asInstanceOf[model.users.DeanManager]}
-    <style>
-        /*upload */
-
-        .fileUpload {
-        position: relative;
-        overflow: hidden;
-        margin: 10px;
-        }
-        .fileUpload input.upload {
-        position: absolute;
-        top: 0;
-        right: 0;
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        cursor: pointer;
-        opacity: 0;
-        filter: alpha(opacity=0);
-        }
-    </style>
 <div class="row">
     @helper.form(action = routes.DeanController.updateProfile(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
         <div class="col-md-6">
@@ -37,7 +17,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="control-label col-md-2">Theme</label>
+            <label for="theme" class="control-label col-md-2">Theme</label>
             <div class="col-md-8">
                 <select name="theme" class="form-control">
                     <option value="bootstrap.min.css" @if(user.theme == "bootstrap.min.css"){selected}>Default</option>
