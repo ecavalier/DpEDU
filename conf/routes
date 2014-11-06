@@ -3,53 +3,58 @@
 # ~~~~
 
 # Home page
-GET         /                                                 controllers.Application.index
-GET         /login                                            controllers.LoginController.login
-GET         /logout                                           controllers.LoginController.logOut
-GET         /admin/profile                                    controllers.LoginController.authenticate
+GET         /                                                       controllers.Application.index
+GET         /login                                                  controllers.LoginController.login
+GET         /logout                                                 controllers.LoginController.logOut
+GET         /admin/profile                                          controllers.LoginController.authenticate
 
 
 
 
-GET         /dean/lookAndFeel                                 controllers.DeanController.openLookAndFeel()
-GET         /dean/departments                                 controllers.DeanController.departmentList()
-POST        /dean/departments/insert                          controllers.DeanController.insertDepartment()
-GET         /dean/departments/remove/:id                      controllers.DeanController.deleteDepartment(id)
-GET         /dean/departments/update/:id                      controllers.DeanController.saveDepartment(id)
-GET         /dean/departments/updateDepartmentForm/:id        controllers.DeanController.getDepartmentEditForm(id)
-GET         /dean/departments/updateManagerForm/:id           controllers.DeanController.getManagerEditForm(id)
-POST        /dean/departments/saveManager/:id                 controllers.DeanController.saveManager(id)
-GET         /dean/departments/deatils/:id                     controllers.DeanController.detailsDepartment(id)
-POST        /dean/departments/addManager/:id                  controllers.DeanController.addManager(id)
-GET         /dean/departments/removeManager/:id               controllers.DeanController.removeManager(id)
-GET         /dean/rooms                                       controllers.DeanController.roomsList()
-POST        /dean/rooms/insert                                controllers.DeanController.addRoom()
-POST        /dean/rooms/update/:id                            controllers.DeanController.saveRoom(id)
-GET         /dean/rooms/updateRoomForm/:id                    controllers.DeanController.getRoomEditForm(id)
-GET         /dean/rooms/remove/:id                            controllers.DeanController.removeRoom(id)
-GET         /dean/theme/:theme                                controllers.DeanController.changeTheme(theme)
-GET         /dean/profile/:id                                 controllers.DeanController.profileInit(id)
-GET         /dean/profile                                     controllers.DeanController.profileRedirectImpl()
-POST        /dean/updateProfile                               controllers.DeanController.updateProfile()
-GET         /picture/:name                                    controllers.DeanController.picture(name: String)
+GET         /dean/lookAndFeel                                       controllers.DeanController.openLookAndFeel()
+GET         /dean/departments                                       controllers.DeanController.departmentList()
+POST        /dean/departments/insert                                controllers.DeanController.insertDepartment()
+GET         /dean/departments/remove/:id                            controllers.DeanController.deleteDepartment(id)
+GET         /dean/departments/update/:id                            controllers.DeanController.saveDepartment(id)
+GET         /dean/departments/updateDepartmentForm/:id              controllers.DeanController.getDepartmentEditForm(id)
+GET         /dean/departments/updateManagerForm/:id                 controllers.DeanController.getManagerEditForm(id)
+POST        /dean/departments/saveManager/:id                       controllers.DeanController.saveManager(id)
+GET         /dean/departments/deatils/:id                           controllers.DeanController.detailsDepartment(id)
+POST        /dean/departments/addManager/:id                        controllers.DeanController.addManager(id)
+GET         /dean/departments/removeManager/:id                     controllers.DeanController.removeManager(id)
+GET         /dean/rooms                                             controllers.DeanController.roomsList()
+POST        /dean/rooms/insert                                      controllers.DeanController.addRoom()
+POST        /dean/rooms/update/:id                                  controllers.DeanController.saveRoom(id)
+GET         /dean/rooms/updateRoomForm/:id                          controllers.DeanController.getRoomEditForm(id)
+GET         /dean/rooms/remove/:id                                  controllers.DeanController.removeRoom(id)
+GET         /dean/theme/:theme                                      controllers.DeanController.changeTheme(theme)
+GET         /dean/profile/:id                                       controllers.DeanController.profileInit(id)
+GET         /dean/profile                                           controllers.DeanController.profileRedirectImpl()
+POST        /dean/updateProfile                                     controllers.DeanController.updateProfile()
+GET         /picture/:name                                          controllers.DeanController.picture(name: String)
 
-POST        /department/updateProfile                         controllers.DepartmentController.updateProfile()
-GET         /department/lookAndFeel                           controllers.DepartmentController.openLookAndFeel()
-GET         /department/theme/:theme                          controllers.DepartmentController.changeTheme(theme)
-GET         /department/profile/:id                           controllers.DepartmentController.profileInit(id)
-GET         /department/profile                               controllers.DepartmentController.profileRedirectImpl()
+POST        /department/updateProfile                               controllers.DepartmentController.updateProfile()
+GET         /department/lookAndFeel                                 controllers.DepartmentController.openLookAndFeel()
+GET         /department/theme/:theme                                controllers.DepartmentController.changeTheme(theme)
+GET         /department/profile/:id                                 controllers.DepartmentController.profileInit(id)
+GET         /department/profile                                     controllers.DepartmentController.profileRedirectImpl()
 
-GET         /department/teachers                              controllers.DepartmentController.teacherList()
-POST        /department/teachers/insert                       controllers.DepartmentController.addTeacher()
-GET         /department/teachers/updateTeacherForm/:id        controllers.DepartmentController.getTeacherEditForm(id)
-POST        /department/teachers/saveTeacher/:id              controllers.DepartmentController.saveTeacher(id)
-GET         /department/teachers/remove/:id                   controllers.DepartmentController.removeTeacher(id)
+GET         /department/teachers                                    controllers.DepartmentController.teacherList()
+POST        /department/teachers/insert                             controllers.DepartmentController.addTeacher()
+GET         /department/teachers/updateTeacherForm/:id              controllers.DepartmentController.getTeacherEditForm(id)
+POST        /department/teachers/saveTeacher/:id                    controllers.DepartmentController.saveTeacher(id)
+GET         /department/teachers/remove/:id                         controllers.DepartmentController.removeTeacher(id)
 
-GET         /department/groups/                               controllers.DepartmentController.groupList()
-POST        /department/groups/insert                         controllers.DepartmentController.addGroup()
-GET         /department/groups/remove/:id                     controllers.DepartmentController.removeGroup(id)
-
+GET         /department/groups/                                     controllers.DepartmentController.groupList()
+POST        /department/groups/insert                               controllers.DepartmentController.addGroup()
+GET         /department/groups/remove/:id                           controllers.DepartmentController.removeGroup(id)
+GET         /department/groups/update/:id                           controllers.DepartmentController.saveGroup(id)
+GET         /department/groups/:id                                  controllers.DepartmentController.groupDetails(id)
+POST        /department/groups/student/insert/:id                   controllers.DepartmentController.addStudent(id)
+GET         /department/groups/student/remove/:groupId/:id          controllers.DepartmentController.removeStudent(id, groupId)
+POST        /department/groups/student/save/:groupId/:id            controllers.DepartmentController.saveStudent(id, groupId)
+GET         /department/groups/student/updateStudentForm/:groupId/:id        controllers.DepartmentController.getStudentEditForm(id, groupId)
 
 # Map static resources from the /public folder to the /assets URL path
-GET         /assets/*file                                     controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                           controllers.Assets.at(path="/public", file)
 

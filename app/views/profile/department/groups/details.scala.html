@@ -1,0 +1,84 @@
+@(group: model.Group)(implicit session: play.api.mvc.Session)
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">@group.name</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+            <div><label class="col-md-2">Curator:&nbsp;</label>
+            @defining(model.users.User.find(group.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
+                <img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src="@routes.DeanController.picture(curator.avatar)"}else{
+                        src="@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 60px; height:60px" class="img-circle">
+                        @curator.fullName
+            }
+            </div>
+                <br/>
+            <div><label class="col-md-2">Elder:&nbsp;</label>
+                @if(group.elder != null){
+                @defining(model.users.User.find(group.elder.toString).get.asInstanceOf[model.users.Student]) {  elder=>
+                    <img  @if(elder.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                    src="@routes.DeanController.picture(elder.avatar)"}else{
+                    src="@routes.Assets.at("images/anonymous.jpg")"}
+                    style="width : 60px; height:60px" class="img-circle">
+                    @elder.fullName
+                }}
+            </div>
+            </div>
+            <div class="col-md-6">
+                <a class="btn btn-primary" data-toggle="modal" data-target="#groupEditForm">Edit</a>
+                <a class="btn btn-success" data-toggle="modal" data-target="#studentForm">Add Student</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+@form("Edit Group", "groupEditForm", "Update", group, routes.DepartmentController.saveGroup(group.id.toString))
+@studentForm("Add Student", "studentForm", "Create", null, routes.DepartmentController.addStudent(group.id.toString))
+
+<div id="editContent"></div>
+
+
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Students</div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">Email</th>
+                <th class="col-md-3">Status</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+            </thead>
+
+            @for(t <- model.Group.getStudentsByGroupId(group.id)) {
+                <tr>
+                    <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src="@routes.DeanController.picture(t.avatar)"}else{
+                        src="@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 60px; height:60px" class="img-circle">
+                        @t.fullName</td>
+                    <td>@t.email</td>
+                    <td>@t.status</td>
+                    <td><a class="btn btn-danger"
+                        href="@routes.DepartmentController.removeStudent(t.id.toString, group.id.toString)">Remove</a>
+                        <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<script>
+function onEdit(id){
+$.get(
+"/department/groups/student/updateStudentForm/"+"@group.id.toString"+"/"+id,
+function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+"html"
+);
+}
+</script>

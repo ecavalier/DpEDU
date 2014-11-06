@@ -14,14 +14,21 @@
                 .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
             @defining(model.users.User.find(g.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
             <tr>
-                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.name</a></td>
-                <td>0</td>
+                <td><a href="@routes.DepartmentController.groupDetails(g.id.toString)">@g.name</a></td>
+                <td>@model.Group.getStudentsCount(g.id)</td>
                 <td><img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
                         src="@routes.DeanController.picture(curator.avatar)"}else{
-                    src="@routes.Assets.at("images/anonymous.jpg")"}
-                    style="width : 60px; height:60px" class="img-circle">
-                    @curator.fullName</td>
-                <td></td>
+                        src="@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 60px; height:60px" class="img-circle">
+                        @curator.fullName</td>
+                    <td>@if(g.elder != null){
+                    @defining(model.users.User.find(g.elder.toString).get.asInstanceOf[model.users.Student]) {  elder=>
+                        <img  @if(elder.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src="@routes.DeanController.picture(elder.avatar)"}else{
+                        src="@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 60px; height:60px" class="img-circle">
+                        @elder.fullName
+                    }}</td>
                 <td><a class="btn btn-danger" href="@routes.DepartmentController.removeGroup(g.id.toString)">Remove</a></td>
             </tr>
             }

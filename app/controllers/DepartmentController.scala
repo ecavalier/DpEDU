@@ -4,7 +4,9 @@ import play.api.data.Form
 import play.api.data.Forms._
 import play.api.mvc.{Security, Action}
 import model._
-import model.users.{Teacher, DepartmentManager, DeanManager, User}
+import model.users._
+import model.users.DepartmentManager
+import model.users.Teacher
 import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 object DepartmentController extends UserController {
@@ -39,6 +41,15 @@ object DepartmentController extends UserController {
     )
   )
 
+  val studentForm = Form(
+    tuple(
+      "fullName" -> text,
+      "email" -> text,
+      "password" -> text,
+      "phone"-> text,
+      "isElder"-> boolean
+    )
+  )
 
 
   //Teacher Section
@@ -105,6 +116,68 @@ object DepartmentController extends UserController {
     Redirect(routes.DepartmentController.groupList())
   }
 
+  def groupDetails(id: String) = Action {
+    implicit request =>
+      changeView(views.html.profile.department.groups.details(Group.find(id).get))
+  }
+
+  def saveGroup(id: String) = Action {
+    implicit request =>
+      val (name, curator) = groupForm.bindFromRequest().get
+      val group = Group.find(id).get
+      Group.save(group.copy(name = name, curator = new ObjectId(curator)))
+      Redirect(routes.DepartmentController.groupDetails(group.id.toString))
+  }
+
+  //Student
+  def addStudent(id: String) = Action(parse.multipartFormData) {
+    implicit request =>
+      val (fullName, email, password, phone, isElder) = studentForm.bindFromRequest().get
+      val studentId = User.insert(Student(fullName=fullName, email=email, password=password, phone = phone,
+        group = new ObjectId(id)))
+      if(isElder){
+        val group = Group.find(id).get
+        Group.save(group.copy(elder = studentId.get))
+      }
+      val filename= Application.pictureUpload(request, "picture", "/home/ivan/appTest/", studentId.get.toString)
+      if(filename != ""){
+        val student = users.User.findByEmail(email).get.asInstanceOf[users.Student]
+        User.save(student.copy(avatar = filename))
+      }
+      Redirect(routes.DepartmentController.groupDetails(id))
+  }
+
+  def removeStudent(id: String, groupId: String) = Action{
+    val group =  Group.find(groupId).get
+    if(group.elder!=null && group.elder.toString == id){
+      Group.save(group.copy(elder=null))
+    }
+    User.delete(id)
+    Redirect(routes.DepartmentController.groupDetails(groupId))
+  }
+
+  def getStudentEditForm(id: String, groupId: String) = Action {
+    implicit request =>
+      Ok(views.html.profile.department.groups.studentForm("Edit Student", "editForm", "Update" ,
+      User.find(id).get.asInstanceOf[Student], routes.DepartmentController.saveStudent(id, groupId)))
+  }
+
+  def saveStudent(id: String, groupId: String) = Action(parse.multipartFormData) {
+    implicit request =>
+      val (fullName, email, password, phone, isElder) = studentForm.bindFromRequest().get
+      val student = User.find(id).get.asInstanceOf[Student]
+      if(isElder){
+        val group = Group.find(groupId).get
+        Group.save(group.copy(elder = student.id))
+      }
+      val filename= Application.pictureUpload(request, "picture", "/home/ivan/appTest/", student.id.toString)
+      if(filename != ""){
+        User.save(student.copy(fullName=fullName, email=email, password=password, phone = phone, avatar = filename))
+      }else{
+        User.save(student.copy(fullName=fullName, email=email, password=password, phone = phone))
+      }
+      Redirect(routes.DepartmentController.groupDetails(groupId))
+  }
 
   //Profile Section
   def updateProfile() = Action(parse.multipartFormData) { implicit request =>

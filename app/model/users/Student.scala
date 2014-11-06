@@ -10,11 +10,12 @@ object StudentStatus extends Enumeration {
 }
 
 case class Student(id: ObjectId = new ObjectId,
+                   fullName: String,
                    email: String,
                    password: String,
                    var theme: String = "bootstrap.min.css",
-                   isElder: Boolean,
-                   status: StudentStatus,
+                   status: String = StudentStatus.Active.toString,
+                   phone: String,
                    group: ObjectId,
                    var avatar: String = "@routes.Assets.at(\"images/anonymous.jpg\")") extends User
 

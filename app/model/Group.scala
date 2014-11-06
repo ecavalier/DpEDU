@@ -6,6 +6,7 @@ import com.novus.salat.annotations._
 import com.mongodb.casbah.Imports._
 import com.mongodb.casbah.commons.TypeImports.ObjectId
 import com.novus.salat.dao.{SalatDAO, ModelCompanion}
+import model.users.{Student, User}
 
 
 case class Group(@Key("_id") id: ObjectId = new ObjectId,
@@ -23,6 +24,7 @@ object Group extends ModelCompanion[Group, ObjectId] {
   def find(id: String) = dao.findOneById(new ObjectId(id))
 
   def delete(id: String) {
+    User.remove(MongoDBObject("group" -> id))
     dao.remove(MongoDBObject("_id" -> new ObjectId(id)))
   }
 
@@ -30,6 +32,12 @@ object Group extends ModelCompanion[Group, ObjectId] {
     dao.insert(Group(name = name, elder = null, curator = null, departmentId = departmentId))
   }
 
-  def getStudentsByGroupId{}
+  def getStudentsByGroupId(id: ObjectId): List[Student] = {
+    User.find(MongoDBObject("group" -> id)).toList.asInstanceOf[List[Student]].sortBy(_.fullName)
+  }
+
+  def getStudentsCount(id: ObjectId): Int = {
+    User.find(MongoDBObject("group" -> id)).count
+  }
 }
 

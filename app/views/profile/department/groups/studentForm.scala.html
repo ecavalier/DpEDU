@@ -1,0 +1,94 @@
+@(title: String, id: String, btn: String, student: model.users.Student, action: Call)(implicit session: play.api.mvc.Session)
+@views.html.profile.genericForm(title, id){
+    @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+        <div class="col-md-6">
+            <br/>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="fullName" class="control-label">Full Name</label>
+                    <input name="fullName" class="form-control"
+                    @if(student != null && student.fullName){value="@student.fullName"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="email" class="control-label">Email</label>
+                    <input name="email" class="form-control"
+                    @if(student != null && student.email){value="@student.email"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="password" class="control-label">Password</label>
+                    <input name="password" class="form-control"
+                    @if(student != null && student.password){value="@student.password"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="phone" class="control-label">Phone</label>
+                    <input name="phone" class="form-control"
+                    @if(student != null && student.phone){value="@student.phone"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="isElder" class="control-label col-md-2">Elder</label>
+                    <div class="col-md-4">
+                        <input type="checkbox" name="isElder" value="true" />
+                        <input type="hidden" name="isElder" value="false" />
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success">@btn</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-8">
+                    <img   id="uploadFile"
+                    @if(student!= null && student.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src = "@routes.DeanController.picture(student.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 120px; height: 120px" class="img-circle"><br/>
+                    <div class="fileUpload btn btn-primary">
+                        <span>Upload</span>
+                        <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="picture"
+                        value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+
+<script type="text/javascript">
+
+function showMyImage(fileInput) {
+var files = fileInput.files;
+
+var url = fileInput.value;
+var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+
+if ((ext != "jpg")) {fileInput.empty; return;}
+
+for (var i = 0; i < files.length; i++) {
+var file = files[i];
+var imageType = /image.*/;
+if (!file.type.match(imageType)) {
+continue;
+}
+var img=document.getElementById("uploadFile");
+img.file = file;
+var reader = new FileReader();
+reader.onload = (function(aImg) {
+return function(e) {
+aImg.src = e.target.result;
+};
+})(img);
+reader.readAsDataURL(file);
+}
+}
+</script>
