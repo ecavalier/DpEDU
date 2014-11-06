@@ -39,5 +39,9 @@ object Group extends ModelCompanion[Group, ObjectId] {
   def getStudentsCount(id: ObjectId): Int = {
     User.find(MongoDBObject("group" -> id)).count
   }
+
+  def getSubjects(id: ObjectId): List[Subject] = {
+    Subject.find(MongoDBObject("group" -> id)).toList
+  }
 }
 

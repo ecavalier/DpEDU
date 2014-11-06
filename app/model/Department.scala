@@ -33,11 +33,35 @@ object Department extends ModelCompanion[Department, ObjectId] {
   }
 
   def getManagers(id: String): List[DepartmentManager] = {
-    User.find(MongoDBObject("departmentId" -> new ObjectId(id))).toList.asInstanceOf[List[DepartmentManager]]
+    User.find(MongoDBObject("departmentId" -> new ObjectId(id), "_typeHint" -> "model.users.DepartmentManager")).toList.asInstanceOf[List[DepartmentManager]]
   }
 
   def getTeachers(id: String): List[Teacher] = {
     User.find(MongoDBObject("departmentId" -> new ObjectId(id), "_typeHint" -> "model.users.Teacher"))
       .toList.asInstanceOf[List[Teacher]]
   }
+
+  def getAllStudents(filter: StudentFilter): List[Student] = {
+    val builder = MongoDBObject.newBuilder
+    if(filter.fullName != null){
+      builder += "fullName" -> filter.fullName
+    }
+    if(filter.email != null){
+      builder += "email" -> filter.email
+    }
+    if(filter.group != null){
+      builder += "group" -> filter.group
+    }
+    if(filter.status != null){
+      builder += "filter.status" -> filter.status
+    }
+    builder += "_typeHint" -> "model.users.Student"
+    User.find(builder).toList.asInstanceOf[List[Student]]
+  }
 }
+
+case class StudentFilter( fullName: String,
+                          email: String,
+                          status: String,
+                          group: ObjectId,
+                          departmentId: ObjectId)

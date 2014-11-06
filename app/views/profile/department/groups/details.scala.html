@@ -76,9 +76,9 @@
 <script>
 function onEdit(id){
 $.get(
-"/department/groups/student/updateStudentForm/"+"@group.id.toString"+"/"+id,
-function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
-"html"
-);
+    "/department/groups/student/updateStudentForm/"+"@group.id.toString"+"/"+id,
+    function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+    "html"
+    );
 }
 </script>

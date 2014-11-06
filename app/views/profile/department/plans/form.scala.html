@@ -1,0 +1,41 @@
+@(title: String, id: String, btn: String, subject: model.Subject, action: Call)(implicit session: play.api.mvc.Session)
+@views.html.profile.genericForm(title, id){
+    @helper.form(action = action, 'class -> "form-horizontal") {
+        <div class="form-group">
+            <label for="name" class="control-label col-md-2">Name</label>
+            <div class="col-md-8">
+                <input name="name" class="form-control" value="@if(subject != null) {@subject.name}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="subjectType[]" class="control-label col-md-2">Type</label>
+            <div class="col-md-8">
+                <select multiple name="subjectType[]" class="form-control">
+                @for(sType <- model.SubjectType.values){
+                    <option value="@sType.toString"
+                        @if(subject != null && subject.subjectType.contains(sType.toString)){selected}>
+                    @sType.toString</option>
+                }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="teacher" class="control-label col-md-2">Teacher</label>
+            <div class="col-md-8">
+                <select name="teacher" class="form-control">
+                @for(teacher <- model.Department.getTeachers(
+                    model.users.User.findByEmail(session.get("username").get)
+                            .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
+                    <option value="@teacher.id" @if(subject != null && subject.teacher == teacher.id){selected}>
+                    @teacher.fullName</option>
+                }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-8 col-md-12">
+                <button type="submit" class="btn btn-primary">@btn</button>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,50 @@
+@(group: model.Group)(implicit session: play.api.mvc.Session)
+<div class="panel panel-default">
+    <div class="panel-heading">Subjects List</div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-2">Type</th>
+                <th class="col-md-3">Teacher</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+        </thead>
+        @for(s <- model.Group.getSubjects(group.id)) {
+            <tr>
+                <td>@s.name</td>
+                <td>@s.subjectType</td>
+                <td>@if(s.teacher != null){
+                    @defining(model.users.User.find(s.teacher.toString).get.asInstanceOf[model.users.Teacher]) {  teacher=>
+                        <img  @if(teacher.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src="@routes.DeanController.picture(teacher.avatar)"}else{
+                        src="@routes.Assets.at("images/anonymous.jpg")"}
+                        style="width : 60px; height:60px" class="img-circle">
+                        @teacher.fullName
+                    }}</td>
+                <td><a class="btn btn-danger" href="@routes.DepartmentController.removeSubject(s.id.toString, group.id.toString)">Remove</a>
+                    <a class="btn btn-primary" onclick="onEdit('@s.id')" >Edit</a></td>
+            </tr>
+        }
+        </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
+    </div>
+</div>
+
+@form("Add Subject", "createForm", "Create", null, routes.DepartmentController.addSubject(group.id.toString))
+
+<div id="editContent"></div>
+
+<script>
+function onEdit(id){
+    $.get(
+            "/department/plans/updateStudentForm/"+id,
+            function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+            "html"
+        );
+    }
+</script>

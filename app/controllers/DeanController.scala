@@ -4,12 +4,10 @@ package controllers
 import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data.Form
-import model.{RoomType, Room, Department}
+import model.{Room, Department}
 import model.users._
 import model.users.DepartmentManager
-import model.users.DepartmentManager
 import model.users.DeanManager
-import play.api.libs.Files
 
 
 object DeanController extends UserController {

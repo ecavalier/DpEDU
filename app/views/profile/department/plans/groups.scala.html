@@ -1,0 +1,13 @@
+@()(implicit session: play.api.mvc.Session)
+<div class="panel panel-default">
+    <div class="panel-heading">Select Group</div>
+    <table class="table">
+        @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
+                .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
+                <tr>
+                    <td><a href="@routes.DepartmentController.planList(g.id.toString)">@g.name</a></td>
+                </tr>
+        }
+        </table>
+</div>
+

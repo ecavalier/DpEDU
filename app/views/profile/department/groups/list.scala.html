@@ -3,13 +3,15 @@
     <div class="panel-heading">Group List</div>
         <!-- Table -->
     <table class="table">
-        <tr>
-            <td class="col-md-2">Name</td>
-            <td class="col-md-2">Students Count</td>
-            <td class="col-md-3">Curator</td>
-            <td class="col-md-3">Elder</td>
-            <td class="col-md-2">Action</td>
-        </tr>
+        <thead>
+            <tr>
+                <th class="col-md-2">Name</th>
+                <th class="col-md-2">Students Count</th>
+                <th class="col-md-3">Curator</th>
+                <th class="col-md-3">Elder</th>
+                <th class="col-md-2">Action</th>
+            </tr>
+        </thead>
         @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
                 .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
             @defining(model.users.User.find(g.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
