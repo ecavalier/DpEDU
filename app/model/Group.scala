@@ -8,11 +8,10 @@ import com.mongodb.casbah.commons.TypeImports.ObjectId
 import com.novus.salat.dao.{SalatDAO, ModelCompanion}
 
 
-@Salat
 case class Group(@Key("_id") id: ObjectId = new ObjectId,
                  name: String,
                  departmentId: ObjectId,
-                 elder: ObjectId,
+                 elder: ObjectId = null,
                  curator: ObjectId)
 
 

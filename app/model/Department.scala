@@ -36,6 +36,8 @@ object Department extends ModelCompanion[Department, ObjectId] {
     User.find(MongoDBObject("departmentId" -> new ObjectId(id))).toList.asInstanceOf[List[DepartmentManager]]
   }
 
-  def getTeachers(){}
-
+  def getTeachers(id: String): List[Teacher] = {
+    User.find(MongoDBObject("departmentId" -> new ObjectId(id), "_typeHint" -> "model.users.Teacher"))
+      .toList.asInstanceOf[List[Teacher]]
+  }
 }

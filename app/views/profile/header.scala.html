@@ -13,7 +13,9 @@
         </div>
         <div class="navbar-collapse collapse" style="margin-right : 5 %">
             <ul class="nav navbar-nav navbar-right">
-                <li> <a><img  src="@routes.DeanController.picture(user.avatar)" style="width : 30px; height:
+                <li> <a><img  @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
+                    src = "@routes.DeanController.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                    style="width : 30px; height:
                 30px" class="img-circle">&nbsp@user.email</a></li>
                 <li><a href="/logout"><img src="@routes.Assets.at("images/exit.png")" style="width : 30px; height:
                 30px"></a></li>

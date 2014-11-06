@@ -128,7 +128,7 @@ object DeanController extends UserController {
   def addRoom() = Action(parse.multipartFormData) {
     implicit request =>
       val (name, roomType) = roomForm.bindFromRequest().get
-      val filename= pictureUpload(request, "picture", "/home/ivan/appTest/room/", name)
+      val filename= Application.pictureUpload(request, "picture", "/home/ivan/appTest/room/", name)
       if(filename != ""){
         Room.insert(new Room(name=name, roomType = roomType, picture = filename))
       }else{
@@ -146,7 +146,7 @@ object DeanController extends UserController {
     implicit request =>
       val room = Room.find(id).get
       val (name, roomType) = roomForm.bindFromRequest().get
-      val filename= pictureUpload(request, "picture", "/home/ivan/appTest/room/", name)
+      val filename= Application.pictureUpload(request, "picture", "/home/ivan/appTest/room/", name)
       if(filename != ""){
         Room.save(room.copy(name=name, roomType=roomType, picture=filename))
       }else{
@@ -164,7 +164,7 @@ object DeanController extends UserController {
   def updateProfile() = Action(parse.multipartFormData) { implicit request =>
       val (email, password, theme) = profileForm.bindFromRequest().get
       val u = User.findByEmail(session.get("username").get).get.asInstanceOf[DeanManager]
-      val filename= pictureUpload(request, "avatar", "/home/ivan/appTest/", u.id.toString)
+      val filename= Application.pictureUpload(request, "avatar", "/home/ivan/appTest/", u.id.toString)
       if(filename != ""){
         User.save(u.copy(email = email, password=password, theme=theme, avatar=filename))
       }else{
@@ -176,16 +176,7 @@ object DeanController extends UserController {
       )
   }
 
-  def pictureUpload(req: Request[MultipartFormData[Files.TemporaryFile]], strMap: String, dirPath: String,
-                    newFileName: String): String  = {
-      var filename = ""
-      req.body.file(strMap).map { picture =>
-      import java.io.File
-      filename = dirPath+newFileName
-      picture.ref.moveTo(new File(filename), replace = true)
-    }
-    filename
-  }
+
 
 }
 

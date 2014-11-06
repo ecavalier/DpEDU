@@ -26,19 +26,28 @@ GET         /dean/rooms                                       controllers.DeanCo
 POST        /dean/rooms/insert                                controllers.DeanController.addRoom()
 POST        /dean/rooms/update/:id                            controllers.DeanController.saveRoom(id)
 GET         /dean/rooms/updateRoomForm/:id                    controllers.DeanController.getRoomEditForm(id)
-GET         /dean/rooms/remove/:id                   controllers.DeanController.removeRoom(id)
+GET         /dean/rooms/remove/:id                            controllers.DeanController.removeRoom(id)
 GET         /dean/theme/:theme                                controllers.DeanController.changeTheme(theme)
 GET         /dean/profile/:id                                 controllers.DeanController.profileInit(id)
 GET         /dean/profile                                     controllers.DeanController.profileRedirectImpl()
 POST        /dean/updateProfile                               controllers.DeanController.updateProfile()
 GET         /picture/:name                                    controllers.DeanController.picture(name: String)
 
+POST        /department/updateProfile                         controllers.DepartmentController.updateProfile()
 GET         /department/lookAndFeel                           controllers.DepartmentController.openLookAndFeel()
 GET         /department/theme/:theme                          controllers.DepartmentController.changeTheme(theme)
 GET         /department/profile/:id                           controllers.DepartmentController.profileInit(id)
 GET         /department/profile                               controllers.DepartmentController.profileRedirectImpl()
+
+GET         /department/teachers                              controllers.DepartmentController.teacherList()
+POST        /department/teachers/insert                       controllers.DepartmentController.addTeacher()
+GET         /department/teachers/updateTeacherForm/:id        controllers.DepartmentController.getTeacherEditForm(id)
+POST        /department/teachers/saveTeacher/:id              controllers.DepartmentController.saveTeacher(id)
+GET         /department/teachers/remove/:id                   controllers.DepartmentController.removeTeacher(id)
+
 GET         /department/groups/                               controllers.DepartmentController.groupList()
-POST        /department/groups/insert                         controllers.DepartmentController.insertDepartment()
+POST        /department/groups/insert                         controllers.DepartmentController.addGroup()
+GET         /department/groups/remove/:id                     controllers.DepartmentController.removeGroup(id)
 
 
 # Map static resources from the /public folder to the /assets URL path

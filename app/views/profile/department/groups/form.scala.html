@@ -1,28 +1,29 @@
-@(title: String, group: model.Group)
-<link href="@routes.Assets.at("stylesheets/profile/faculty_form.css")" rel="stylesheet">
-<div class="modal fade " id="groupForm" >
-    <div class="col-md-5 col-md-offset-3">
-        <div class="row">
-            <div class="panel panel-default faculty-form ">
-                <div class="panel-heading">
-                    <h4 class="form-signin-heading" style="margin-bottom : 10 px">@title</h4>
-                </div>
-                <div class="panel-body">
-                @helper.form(action = routes.DepartmentController.insertDepartment(), 'class -> "form-horizontal") {
+@(title: String, id: String, btn: String, group: model.Group, action: Call)(implicit session: play.api.mvc.Session)
+@views.html.profile.genericForm(title, id){
+                @helper.form(action = action, 'class -> "form-horizontal") {
                     <div class="form-group">
-                        <label for="inputName" class="control-label col-md-2">Name</label>
+                        <label for="name" class="control-label col-md-2">Name</label>
                         <div class="col-md-8">
                             <input name="name" class="form-control" value="@if(group != null) {@group.name}">
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="curator" class="control-label col-md-2">Curator</label>
+                        <div class="col-md-8">
+                            <select name="curator" class="form-control">
+                            @for(curator <- model.Department.getTeachers(
+                                model.users.User.findByEmail(session.get("username").get)
+                                        .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
+                                <option value="@curator.id" @if(group != null && group.curator == curator.id){selected}>
+                                @curator.fullName</option>
+                            }
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-offset-8 col-md-12">
-                            <button type="submit" class="btn btn-primary">Create</button>
+                            <button type="submit" class="btn btn-primary">@btn</button>
                         </div>
                     </div>
                 }
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+}

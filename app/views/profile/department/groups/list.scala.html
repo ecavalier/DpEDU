@@ -12,21 +12,26 @@
         </tr>
         @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
                 .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
+            @defining(model.users.User.find(g.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
             <tr>
                 <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.name</a></td>
-                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.elder</a></td>
-                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.elder</a></td>
-                <td><a href="@routes.DeanController.detailsDepartment(g.id.toString)">@g.name</a></td>
-                <td><a class="btn btn-danger" href="@routes.DeanController.deleteDepartment(g.id.toString)">Remove</a></td>
+                <td>0</td>
+                <td><img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src="@routes.DeanController.picture(curator.avatar)"}else{
+                    src="@routes.Assets.at("images/anonymous.jpg")"}
+                    style="width : 60px; height:60px" class="img-circle">
+                    @curator.fullName</td>
+                <td></td>
+                <td><a class="btn btn-danger" href="@routes.DepartmentController.removeGroup(g.id.toString)">Remove</a></td>
             </tr>
+            }
         }
-
         </table>
 </div>
 
 <div class="row">
     <div class="col-md-12">
-        <a class="btn btn-primary" data-toggle="modal" data-target="#groupForm">Add New</a>
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
     </div>
 </div>
-@form("Create New Group", null)
+@form("Add Group", "createForm", "Create", null, routes.DepartmentController.addGroup())

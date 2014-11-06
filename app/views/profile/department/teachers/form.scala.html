@@ -1,0 +1,86 @@
+@(title: String, id: String, btn: String, teacher: model.users.Teacher, action: Call)
+@views.html.profile.genericForm(title, id){
+    @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+        <div class="col-md-6">
+            <br/>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="fullName" class="control-label">Full Name</label>
+                    <input name="fullName" class="form-control"
+                    @if(teacher != null && teacher.fullName){value="@teacher.fullName"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="position" class="control-label">Position</label><br/>
+                    <select name="position" class="form-control">
+                    @for(t <- model.users.TeacherPosition.values) {
+                        <option value="@t.toString" @if(teacher != null && teacher.position == t.toString){selected}>@t.toString</option>
+                    }
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="email" class="control-label">Email</label>
+                    <input name="email" class="form-control"
+                    @if(teacher != null && teacher.email){value="@teacher.email"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label for="password" class="control-label">Password</label>
+                    <input name="password" class="form-control"
+                    @if(teacher != null && teacher.password){value="@teacher.password"}else{value=""}>
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <button type="submit" class="btn btn-success">@btn</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-8">
+                    <img   id="uploadFile"
+                    @if(teacher!= null && teacher.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
+                        src = "@routes.DeanController.picture(teacher.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                    style="width : 120px; height: 120px" class="img-circle"><br/>
+                    <div class="fileUpload btn btn-primary">
+                        <span>Upload</span>
+                        <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="picture"
+                        value="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    <script type="text/javascript">
+
+    function showMyImage(fileInput) {
+    var files = fileInput.files;
+
+    var url = fileInput.value;
+    var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+
+    if ((ext != "jpg")) {fileInput.empty; return;}
+
+    for (var i = 0; i < files.length; i++) {
+    var file = files[i];
+    var imageType = /image.*/;
+    if (!file.type.match(imageType)) {
+    continue;
+    }
+    var img=document.getElementById("uploadFile");
+    img.file = file;
+    var reader = new FileReader();
+    reader.onload = (function(aImg) {
+    return function(e) {
+    aImg.src = e.target.result;
+    };
+    })(img);
+    reader.readAsDataURL(file);
+    }
+    }
+    </script>
+
+}

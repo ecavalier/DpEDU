@@ -1,0 +1,50 @@
+@(departmentId: String)
+<div class="panel panel-primary">
+    <div class="panel-heading">Rooms List</div>
+        <!-- Table -->
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="col-md-3">Name</th>
+                <th class="col-md-3">Email</th>
+                <th class="col-md-3">Position</th>
+                <th class="col-md-3">Action</th>
+            </tr>
+        </thead>
+        @for(t <- model.Department.getTeachers(departmentId)) {
+            <tr>
+                <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                    src="@routes.DeanController.picture(t.avatar)"}else{
+                    src="@routes.Assets.at("images/anonymous.jpg")"}
+                    style="width : 60px; height:60px" class="img-circle">
+                    @t.fullName</td>
+                <td>@t.email</td>
+                <td>@t.position</td>
+                <td><a class="btn btn-danger" href="@routes.DepartmentController.removeTeacher(t.id.toString)">Remove</a>
+                    <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
+    </div>
+</div>
+
+<div id="editContent"></div>
+
+@form("Add Teacher", "createForm", "Create", null, routes.DepartmentController.addTeacher())
+<script>
+function onEdit(id){
+    $.get(
+        "/department/teachers/updateTeacherForm/"+id,
+        function(data) { $("#editContent" ).html(data);$("#editForm").modal('show');},
+        "html"
+    );
+}
+</script>
+
+
