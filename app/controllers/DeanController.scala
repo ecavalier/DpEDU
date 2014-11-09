@@ -4,17 +4,18 @@ package controllers
 import play.api.mvc._
 import play.api.data.Forms._
 import play.api.data.Form
-import model.{Room, Department}
+import model.{ScheduleItem, StudentFilter, Room, Department}
 import model.users._
 import model.users.DepartmentManager
 import model.users.DeanManager
+import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 
 object DeanController extends UserController {
 
   var theme = "bootstrap.min.css"
   layout = views.html.profile.dean.adminLayout
-  profile = views.html.profile.dean.profile
+  profile = views.html.profile.dean.department.list
   lookAndFeelPath = views.html.profile.dean.lookAndFeel
   profileRedirect = Redirect(routes.DeanController.profileRedirectImpl())
 
@@ -47,6 +48,26 @@ object DeanController extends UserController {
       "roomType" -> text
     )
   )
+
+  val studentSearchForm = Form{
+    tuple(
+      "fullName" -> text,
+      "email" -> text,
+      "status" -> text,
+      "group" -> text
+    )
+  }
+
+  val scheduleForm = Form{
+    tuple(
+      "subject" -> text,
+      "group" -> text,
+      "room" -> text,
+      "lecture" -> text,
+      "day" -> text,
+      "week" -> text
+    )
+  }
 
   //Department Section
   def departmentList = Action {
@@ -158,6 +179,69 @@ object DeanController extends UserController {
       Room.delete(id)
       Redirect(routes.DeanController.roomsList())
   }
+
+  //Student Search Section
+  def searchStudent() = Action { implicit request =>
+    changeView(views.html.profile.dean.student.list(new model.StudentFilter()))
+  }
+
+  def searchStudentRender() = Action { implicit request =>
+    val group = request.getQueryString("group").get
+    if(group!=""){
+      val list = Department.getAllStudents(StudentFilter(fullName = request.getQueryString("fullName").get,
+        status = request.getQueryString("status").get, email = request.getQueryString("email").get,
+        group = new ObjectId(request.getQueryString("group").get)))
+      Ok(views.html.profile.dean.student.tableContent(list))
+    }else{
+      val list = Department.getAllStudents(StudentFilter(fullName = request.getQueryString("fullName").get,
+        status = request.getQueryString("status").get, email = request.getQueryString("email").get,
+        group = null) )
+      Ok(views.html.profile.dean.student.tableContent(list))
+    }
+
+  }
+
+  //Schedule Section
+   def openShedule() = Action { implicit request =>
+      changeView(views.html.profile.dean.shedule.view("", ""))
+    }
+
+    def getSchduleForm() = Action { implicit request =>
+      val lecture = request.getQueryString("lecture").get
+      val week = request.getQueryString("week").get
+      val group = request.getQueryString("group").get
+      val day = request.getQueryString("day").get
+      val item = ScheduleItem.find(new ObjectId(group), lecture.toInt, day.toInt, week.toInt)
+      if(item.isEmpty){
+        Ok(views.html.profile.dean.shedule.form("Create Item", "form", "Create" ,null,
+          new ObjectId(group), lecture.toInt, day.toInt, week.toInt , routes.DeanController.addScheduleItem()))
+      }else{
+        Ok(views.html.profile.dean.shedule.form("Edit Item", "form", "Update" ,item.get,
+          new ObjectId(group), lecture.toInt, day.toInt, week.toInt ,   routes.DeanController.saveScheduleItem(item.get.id.toString)))
+      }
+    }
+
+    def addScheduleItem() = Action { implicit request =>
+      val (subject, group, room, lecture, day, week) =  scheduleForm.bindFromRequest().get
+      ScheduleItem.insert(ScheduleItem(subject = new ObjectId(subject), group = new ObjectId(group),
+        room = new ObjectId(room), lecture = lecture.toInt, day = day.toInt, week = week.toInt))
+      changeView(views.html.profile.dean.shedule.view(group, week))
+    }
+
+    def saveScheduleItem(id: String) = Action { implicit request =>
+      val (subject, group, room, lecture, day, week) =  scheduleForm.bindFromRequest().get
+      val item = ScheduleItem.find(id).get
+      ScheduleItem.save(item.copy(subject = new ObjectId(subject), group = new ObjectId(group),
+        room = new ObjectId(room), lecture = lecture.toInt, day = day.toInt, week = week.toInt))
+      changeView(views.html.profile.dean.shedule.view(group, week))
+    }
+
+    def getShowTable() = Action { implicit request =>
+      val group = request.getQueryString("group").get
+      val week = request.getQueryString("week").get
+      Ok(views.html.profile.dean.shedule.schedule(new ObjectId(group), week.toInt))
+    }
+
 
   def updateProfile() = Action(parse.multipartFormData) { implicit request =>
       val (email, password, theme) = profileForm.bindFromRequest().get

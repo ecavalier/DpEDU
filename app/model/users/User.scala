@@ -1,15 +1,14 @@
 package model.users
 
-import model.CustomPlaySalatContext
-import CustomPlaySalatContext._
-import com.novus.salat.annotations._
+import play.api.Play.current
+import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
-import com.mongodb.casbah.commons.TypeImports.ObjectId
-import com.novus.salat.dao.{SalatDAO, ModelCompanion}
+import se.radley.plugin.salat._
+import model.mongoContext
+import mongoContext._
 
-@Salat
 trait User {
-  @Key("_id") val id: ObjectId
+  val id: ObjectId
   val email: String
   val password: String
   var theme: String
@@ -17,7 +16,7 @@ trait User {
 }
 
 object User extends ModelCompanion[User, ObjectId] {
-  val collection = MongoConnection()("dnu")("users")
+  val collection = mongoCollection("users")
   val dao = new SalatDAO[User, ObjectId](collection = collection) {}
 
   def findByEmail(email: String): Option[User] = findOne(MongoDBObject("email" -> email))

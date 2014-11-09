@@ -1,0 +1,28 @@
+@(list: List[model.users.Student])
+<table class="table">
+    <thead>
+        <tr>
+            <th class="col-md-3">Name</th>
+            <th class="col-md-2">Email</th>
+            <th class="col-md-2">Status</th>
+            <th class="col-md-2">Group</th>
+            <th class="col-md-3">Action</th>
+        </tr>
+    </thead>
+    @for(t <- list) {
+        <tr>
+            <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+                src="@routes.DeanController.picture(t.avatar)"}else{
+                src="@routes.Assets.at("images/anonymous.jpg")"}
+                style="width : 60px; height:60px" class="img-circle">
+                @t.fullName</td>
+            <td>@t.email</td>
+            <td>@t.status</td>
+            <td>@if(!model.Group.find(t.group.toString).isEmpty){@model.Group.find(t.group.toString).get.name}</td>
+            <td>
+                <a class="btn btn-danger" href="#">Remove</a>
+                <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
+        </tr>
+    }
+</table>
+

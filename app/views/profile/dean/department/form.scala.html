@@ -4,18 +4,19 @@
                     <div class="form-group">
                         <label for="inputName" class="control-label col-md-2">Name</label>
                         <div class="col-md-8">
-                            <input name="name" class="form-control" value="@if(department != null) {@department.name}">
+                            <input name="name" required class="form-control"
+                            value="@if(department != null) {@department.name}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword" class="control-label col-md-2">Description</label>
+                        <label for="description" class="control-label col-md-2">Description</label>
                         <div class="col-md-8">
                             <textarea name="description" class="form-control" rows="3">@if(department != null) {@department.description}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-8 col-md-12">
-                            <button type="submit" class="btn btn-primary">@btn</button>
+                            <button type="submit" class="btn btn-success">@btn</button>
                         </div>
                     </div>
                 }

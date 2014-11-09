@@ -4,13 +4,13 @@
         <div class="form-group">
             <label for="name" class="control-label col-md-2">Name</label>
             <div class="col-md-8">
-                <input name="name" class="form-control" value="@if(subject != null) {@subject.name}">
+                <input name="name" required="" class="form-control" value="@if(subject != null) {@subject.name}">
             </div>
         </div>
         <div class="form-group">
             <label for="subjectType[]" class="control-label col-md-2">Type</label>
             <div class="col-md-8">
-                <select multiple name="subjectType[]" class="form-control">
+                <select multiple required="" name="subjectType[]" class="form-control">
                 @for(sType <- model.SubjectType.values){
                     <option value="@sType.toString"
                         @if(subject != null && subject.subjectType.contains(sType.toString)){selected}>
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
             <div class="col-md-offset-8 col-md-12">
-                <button type="submit" class="btn btn-primary">@btn</button>
+                <button type="submit" class="btn btn-success">@btn</button>
             </div>
         </div>
     }

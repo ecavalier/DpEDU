@@ -6,7 +6,7 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="fullName" class="control-label">Full Name</label>
-                    <input name="fullName" class="form-control"
+                    <input name="fullName" required="" class="form-control"
                     @if(teacher != null && teacher.fullName){value="@teacher.fullName"}else{value=""}>
                 </div>
             </div>
@@ -23,14 +23,14 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="email" class="control-label">Email</label>
-                    <input name="email" class="form-control"
+                    <input type="email" name="email" required="" class="form-control"
                     @if(teacher != null && teacher.email){value="@teacher.email"}else{value=""}>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="password" class="control-label">Password</label>
-                    <input name="password" class="form-control"
+                    <input type="password" name="password" required="" class="form-control"
                     @if(teacher != null && teacher.password){value="@teacher.password"}else{value=""}>
                 </div>
             </div>

@@ -1,12 +1,10 @@
 package model
 
-import model.CustomPlaySalatContext
-import CustomPlaySalatContext._
-import com.novus.salat.annotations._
-import com.novus.salat.dao.{SalatDAO, ModelCompanion}
+import play.api.Play.current
+import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
-import com.mongodb.casbah.commons.TypeImports._
-import model.RoomType.RoomType
+import se.radley.plugin.salat._
+import mongoContext._
 
 object RoomType extends Enumeration {
   type RoomType = Value
@@ -21,13 +19,13 @@ object RoomType extends Enumeration {
   }
 }
 
-case class Room(@Key("_id") id: ObjectId = new ObjectId,
+case class Room(id: ObjectId = new ObjectId,
                  name: String,
                  roomType: String = RoomType.Lecture.toString,
                  picture: String = "")
 
 object Room extends ModelCompanion[Room, ObjectId] {
-  val collection = MongoConnection()("dnu")("rooms")
+  val collection = mongoCollection("rooms")
   val dao = new SalatDAO[Room, ObjectId](collection = collection) {}
 
   def find(id: String) = dao.findOneById(new ObjectId(id))

@@ -1,15 +1,14 @@
 package model
 
-import model.CustomPlaySalatContext
-import CustomPlaySalatContext._
-import com.novus.salat.annotations._
+import play.api.Play.current
+import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
-import com.mongodb.casbah.commons.TypeImports.ObjectId
-import com.novus.salat.dao.{SalatDAO, ModelCompanion}
+import se.radley.plugin.salat._
+import mongoContext._
 import model.users.{Student, User}
 
 
-case class Group(@Key("_id") id: ObjectId = new ObjectId,
+case class Group(id: ObjectId = new ObjectId,
                  name: String,
                  departmentId: ObjectId,
                  elder: ObjectId = null,
@@ -18,7 +17,7 @@ case class Group(@Key("_id") id: ObjectId = new ObjectId,
 
 object Group extends ModelCompanion[Group, ObjectId] {
 
-  val collection = MongoConnection()("dnu")("groups")
+  val collection = mongoCollection("groups")
   val dao = new SalatDAO[Group, ObjectId](collection = collection) {}
 
   def find(id: String) = dao.findOneById(new ObjectId(id))

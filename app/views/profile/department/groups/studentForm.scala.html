@@ -1,3 +1,4 @@
+
 @(title: String, id: String, btn: String, student: model.users.Student, action: Call)(implicit session: play.api.mvc.Session)
 @views.html.profile.genericForm(title, id){
     @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
@@ -6,28 +7,28 @@
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="fullName" class="control-label">Full Name</label>
-                    <input name="fullName" class="form-control"
+                    <input id="fullName" name="fullName" required="" class="form-control"
                     @if(student != null && student.fullName){value="@student.fullName"}else{value=""}>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="email" class="control-label">Email</label>
-                    <input name="email" class="form-control"
+                    <input id="email" type="email" name="email" required="" class="form-control"
                     @if(student != null && student.email){value="@student.email"}else{value=""}>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="password" class="control-label">Password</label>
-                    <input name="password" class="form-control"
+                    <input id="password" type="password" required="" name="password" class="form-control"
                     @if(student != null && student.password){value="@student.password"}else{value=""}>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-md-12">
                     <label for="phone" class="control-label">Phone</label>
-                    <input name="phone" class="form-control"
+                    <input id="phone" type="number" name="phone" required="" class="form-control"
                     @if(student != null && student.phone){value="@student.phone"}else{value=""}>
                 </div>
             </div>
@@ -61,6 +62,18 @@
         </div>
     }
 }
+
+     <style>
+     input[type=number]::-webkit-outer-spin-button,
+     input[type=number]::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+     margin: 0;
+     }
+
+     input[type=number] {
+     -moz-appearance:textfield;
+     }
+     </style>
 
 
 

@@ -29,8 +29,10 @@
         </div>
         </div>
         <div class="col-md-6">
-            <img   id="uploadFile" src="@routes.DeanController.picture(user.avatar)" style="width : 120px; height:
-            120px" class="img-circle"> <br/>
+            <img   id="uploadFile"
+            @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
+                src = "@routes.DeanController.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+            style="width : 120px; height: 120px" class="img-circle"><br/>
             <div class="fileUpload btn btn-primary">
                 <span>Upload</span>
                 <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="avatar"

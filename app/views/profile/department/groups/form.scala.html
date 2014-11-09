@@ -4,7 +4,7 @@
                     <div class="form-group">
                         <label for="name" class="control-label col-md-2">Name</label>
                         <div class="col-md-8">
-                            <input name="name" class="form-control" value="@if(group != null) {@group.name}">
+                            <input name="name" required="" class="form-control" value="@if(group != null) {@group.name}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-8 col-md-12">
-                            <button type="submit" class="btn btn-primary">@btn</button>
+                            <button type="submit" class="btn btn-success">@btn</button>
                         </div>
                     </div>
                 }

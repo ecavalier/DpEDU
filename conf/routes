@@ -32,6 +32,13 @@ GET         /dean/profile/:id                                                con
 GET         /dean/profile                                                    controllers.DeanController.profileRedirectImpl()
 POST        /dean/updateProfile                                              controllers.DeanController.updateProfile()
 GET         /picture/:name                                                   controllers.DeanController.picture(name: String)
+GET         /dean/student                                                    controllers.DeanController.searchStudent()
+GET         /dean/student/list                                               controllers.DeanController.searchStudentRender()
+GET         /dean/student/shedule                                            controllers.DeanController.openShedule()
+GET         /dean/student/schedule/form                                      controllers.DeanController.getSchduleForm()
+GET         /dean/student/schedule/table                                     controllers.DeanController.getShowTable()
+POST        /dean/student/schedule/insert                                    controllers.DeanController.addScheduleItem()
+GET         /dean/student/schedule/save/:id                                  controllers.DeanController.saveScheduleItem(id)
 
 POST        /department/updateProfile                                        controllers.DepartmentController.updateProfile()
 GET         /department/lookAndFeel                                          controllers.DepartmentController.openLookAndFeel()

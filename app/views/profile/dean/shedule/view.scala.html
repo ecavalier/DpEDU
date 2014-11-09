@@ -1,0 +1,65 @@
+@(group: String, week: String)
+<div class="panel panel-default">
+    <div class="panel-heading">Options</div>
+        <div class="panel-body">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="group" class="control-label ">Group</label>
+                    <select id="group" name="group" class="form-control">
+                    @for(t <- model.Department.getAllGroups) {
+                        <option @if(group == t.id.toString){selected} value="@t.id.toString">@t.name</option>
+                    }
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label for="week" class="control-label ">Week</label>
+                    <select id="week" name="week" class="form-control">
+                        <option @if(week == "0"){selected} value="0">First Week</option>
+                        <option @if(week == "1"){selected} value="1">Second Week</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Schedule</div>
+    <div class="panel-body">
+    <div id="content"></div>
+    </div>
+</div>
+
+<div id="modal">
+
+</div>
+
+<script>
+    $(document).ready(function() {
+     getTable($("#group").val(), $("#week").val())
+    });
+
+    $("#group").on('change', function (e) {
+        var valueSelected = this.value;
+        getTable(valueSelected, $("#week").val())
+    });
+
+    $("#week").on('change', function (e) {
+        var valueSelected = this.value;
+        getTable($("#group").val(), valueSelected)
+    });
+
+    function getTable(group, week) {
+        $.get(
+            "/dean/student/schedule/table?"+
+            "group="+group+"&"+
+            "week="+week,
+
+            function(data) { $("#content").html(data);},
+            "html"
+        );
+    }
+</script>
+

@@ -1,30 +1,97 @@
+@(filter: model.StudentFilter)
+<div class="row">
+    <div class="panel panel-default">
+    <div class="panel-heading">Students</div>
+        <div class="panel-body">
+
+        <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                                <label for="fullName" class="control-label col-md2">Full Name</label>
+                                <input id="fullName" name="fullName" class="form-control"
+                                @if(filter != null && filter.fullName){value="@filter.fullName"}else{value=""}>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="status" class="control-label ">Type</label>
+                                <select id="status" name="status" class="form-control">
+                                    <option value="">All</option>
+                                @for(t <- model.users.StudentStatus.values) {
+                                    <option value="@t.toString" @if(filter != null && filter.status == t.toString){selected}>@t.toString</option>
+                                }
+                                </select>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="email" class="control-label col-md-2">Email</label>
+                                <input id="email" name="email" class="form-control"
+                                @if(filter != null && filter.email){value="@filter.email"}else{value=""}>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group col-md-12">
+                            <label for="group" class="control-label col-md-2">Group</label>
+                                <select id="group" name="group" class="form-control">
+                                    <option value="">All</option>
+                                @for(t <- model.Department.getAllGroups) {
+                                    <option value="@t.id.toString" @if(filter != null && filter.group == t.toString){selected}>@t.name</option>
+                                }
+                                </select>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+            <div class="form-group col-md-6">
+                <a onclick="onSearch()" class="btn btn-success">Search</a>
+            </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+
+
 <div class="row">
     <div class="panel panel-default">
         <div class="panel-heading">Students</div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th class="col-md-3">Name</th>
-                    <th class="col-md-3">Email</th>
-                    <th class="col-md-3">Status</th>
-                    <th class="col-md-3">Action</th>
-                </tr>
-            </thead>
+        <div id="content">
 
-            @for(t <- model.Group.getStudentsByGroupId(group.id)) {
-                <tr>
-                    <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(t.avatar)"}else{
-                        src="@routes.Assets.at("images/anonymous.jpg")"}
-                        style="width : 60px; height:60px" class="img-circle">
-                        @t.fullName</td>
-                    <td>@t.email</td>
-                    <td>@t.status</td>
-                    <td><a class="btn btn-danger"
-                    href="@routes.DepartmentController.removeStudent(t.id.toString, group.id.toString)">Remove</a>
-                        <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
-                </tr>
-            }
-        </table>
+        </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function() {
+        getTable()
+    });
+
+    function onSearch(){
+        getTable()
+    }
+
+    function getTable(){
+        $.get(
+        "/dean/student/list?"+
+        "fullName="+$("#fullName" ).val()+"&"+
+        "email="+$("#email").val()+"&"+
+        "status="+$("#status" ).val()+"&"+
+        "group="+$("#group" ).val(),
+
+        function(data) {$("#content" ).html(data);},
+        "html"
+        );
+    }
+</script>

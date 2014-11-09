@@ -1,0 +1,35 @@
+@(title: String, id: String, btn: String, item: model.ScheduleItem,
+        group: com.mongodb.casbah.commons.TypeImports.ObjectId, lecture: Int, day: Int, week: Int, action: Call)
+@views.html.profile.genericForm(title, id){
+    @helper.form(action = action, 'class -> "form-horizontal") {
+        <div class="form-group">
+            <input type="hidden" name="group" value="@group">
+            <input type="hidden" name="lecture" value="@lecture">
+            <input type="hidden" name="day" value="@day">
+            <input type="hidden" name="week" value="@week">
+            <label for="subject" class="control-label col-md-2">Subject</label>
+            <div class="col-md-8">
+                <select id="subject" name="subject" class="form-control">
+                @for(s <- model.Group.getSubjects(group)) {
+                    <option value="@s.id" @if(item != null && item.subject == s.id){selected}>@s.name</option>
+                }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="room" class="control-label col-md-2">Room</label>
+            <div class="col-md-8">
+                <select id="room" name="room" class="form-control">
+                @for(r <- model.Room.findAll()) {
+                    <option value="@r.id" @if(item != null && item.room == r.id){selected}>@r.name</option>
+                }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-8 col-md-12">
+                <button type="submit" class="btn btn-primary">@btn</button>
+            </div>
+        </div>
+    }
+}
