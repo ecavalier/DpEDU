@@ -11,11 +11,9 @@ import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 object DepartmentController extends UserController {
 
-  var theme = "bootstrap.min.css"
   layout = views.html.profile.department.departmentLayout
-  profile = views.html.profile.department.groups.list
+  profile = routes.DepartmentController.groupList()
   lookAndFeelPath =  views.html.profile.department.lookAndFeel
-  profileRedirect = Redirect(routes.DepartmentController.profileRedirectImpl())
 
   val profileForm = Form(
     tuple(

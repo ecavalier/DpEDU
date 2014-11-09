@@ -1,20 +1,42 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <li>
+        <li id="mDepartment">
             <a href="@routes.DeanController.departmentList()">Departments</a>
         </li>
-        <li>
+        <li id="mStudents">
             <a href="@routes.DeanController.searchStudent()">Students</a>
         </li>
-        <li>
+        <li id="mRooms">
             <a href="@routes.DeanController.roomsList()">Rooms</a>
         </li>
-        <li>
+        <li id="mSchedule">
             <a href="@routes.DeanController.openShedule()">Schedule</a>
         </li>
-        <li>
+        <li id="mProfile">
             <a href="@routes.DeanController.openLookAndFeel()">Profile</a>
         </li>
     </ul>
 </div>
+
+<script>
+    $(document).ready(function() {
+        var pathname = window.location.pathname
+
+        if(pathname.indexOf("departments") >= 0){
+            $("#mDepartment").addClass("active");
+        }
+        if(pathname.indexOf("student") >= 0 && pathname.indexOf("shedule") < 0){
+            $("#mStudents").addClass("active");
+        }
+        if(pathname.indexOf("rooms") >= 0){
+            $("#mRooms").addClass("active");
+        }
+        if(pathname.indexOf("shedule") >= 0){
+            $("#mSchedule").addClass("active");
+        }
+        if(pathname.indexOf("lookAndFeel") >= 0){
+            $("#mProfile").addClass("active");
+        }
+    });
+</script>

@@ -13,12 +13,23 @@
         </div>
         <div class="navbar-collapse collapse" style="margin-right : 5 %">
             <ul class="nav navbar-nav navbar-right">
-                <li> <a><img  @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
+                <li><a href="#menu-toggle" id="menu-toggle">
+                    <img src = "@routes.Assets.at("images/menu.png")"  style="width : 32px; height:32px"/></a>
+                </li>
+                <li><a>
+                    <img  @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
                     src = "@routes.DeanController.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
-                    style="width : 32px; height:
-                32px" class="img-circle"></a></li>
+                    style="width : 32px; height:32px" class="img-circle"></a>
+                </li>
                 <li><a href="/logout">log out</a></li>
             </ul>
         </div>
     </div>
 </div>
+
+<script>
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>

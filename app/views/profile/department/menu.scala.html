@@ -1,17 +1,36 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <li>
+        <li id="mGroup">
             <a href="@routes.DepartmentController.groupList()">Groups</a>
         </li>
-        <li>
+        <li id="mTeacher">
             <a href="@routes.DepartmentController.teacherList()">Teachers</a>
         </li>
-        <li>
+        <li id="mPlans">
             <a href="@routes.DepartmentController.planGroupList()">Study Plans</a>
         </li>
-        <li>
+        <li id="mProfile">
             <a href="@routes.DepartmentController.openLookAndFeel()">Profile</a>
         </li>
     </ul>
 </div>
+
+<script>
+$(document).ready(function() {
+    var pathname = window.location.pathname
+
+    if(pathname.indexOf("group") >= 0){
+        $("#mGroup").addClass("active");
+    }
+    if(pathname.indexOf("teacher") >= 0){
+        $("#mTeacher").addClass("active");
+    }
+    if(pathname.indexOf("plan") >= 0){
+        $("#mPlans").addClass("active");
+    }
+    if(pathname.indexOf("lookAndFeel") >= 0){
+        $("#mProfile").addClass("active");
+    }
+});
+</script>

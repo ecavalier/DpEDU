@@ -27,9 +27,7 @@ POST        /dean/rooms/insert                                               con
 POST        /dean/rooms/update/:id                                           controllers.DeanController.saveRoom(id)
 GET         /dean/rooms/updateRoomForm/:id                                   controllers.DeanController.getRoomEditForm(id)
 GET         /dean/rooms/remove/:id                                           controllers.DeanController.removeRoom(id)
-GET         /dean/theme/:theme                                               controllers.DeanController.changeTheme(theme)
 GET         /dean/profile/:id                                                controllers.DeanController.profileInit(id)
-GET         /dean/profile                                                    controllers.DeanController.profileRedirectImpl()
 POST        /dean/updateProfile                                              controllers.DeanController.updateProfile()
 GET         /picture/:name                                                   controllers.DeanController.picture(name: String)
 GET         /dean/student                                                    controllers.DeanController.searchStudent()
@@ -42,9 +40,7 @@ GET         /dean/student/schedule/save/:id                                  con
 
 POST        /department/updateProfile                                        controllers.DepartmentController.updateProfile()
 GET         /department/lookAndFeel                                          controllers.DepartmentController.openLookAndFeel()
-GET         /department/theme/:theme                                         controllers.DepartmentController.changeTheme(theme)
 GET         /department/profile/:id                                          controllers.DepartmentController.profileInit(id)
-GET         /department/profile                                              controllers.DepartmentController.profileRedirectImpl()
 
 GET         /department/teachers                                             controllers.DepartmentController.teacherList()
 POST        /department/teachers/insert                                      controllers.DepartmentController.addTeacher()
@@ -68,6 +64,12 @@ POST        /department/plans/:id/insert                                     con
 POST        /department/plans/update/:id                                     controllers.DepartmentController.saveSubject(id)
 GET         /department/plans/:groupId/remove/:id                            controllers.DepartmentController.removeSubject(id, groupId)
 GET         /department/plans/updateStudentForm/:id                          controllers.DepartmentController.getSubjectEditForm(id)
+
+
+GET         /student/profile/:id                                             controllers.StudentController.profileInit(id)
+GET         /student/shedule                                                 controllers.StudentController.viewSchedule()
+GET         /student/lookAndFeel                                             controllers.StudentController.openLookAndFeel()
+POST        /student/updateProfile                                           controllers.StudentController.updateProfile()
 
 
 # Map static resources from the /public folder to the /assets URL path

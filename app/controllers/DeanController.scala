@@ -13,11 +13,9 @@ import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 object DeanController extends UserController {
 
-  var theme = "bootstrap.min.css"
   layout = views.html.profile.dean.adminLayout
-  profile = views.html.profile.dean.department.list
+  profile = routes.DeanController.searchStudent()
   lookAndFeelPath = views.html.profile.dean.lookAndFeel
-  profileRedirect = Redirect(routes.DeanController.profileRedirectImpl())
 
   // Forms Section
   val departmentForm = Form(
