@@ -1,0 +1,23 @@
+@(item:  Option[model.ScheduleItem])
+<div id="item" >
+    @if(!item.isEmpty) {
+
+        @defining(model.Subject.find(item.get.subject.toString)) {  subject=>
+            <div>Subject:&nbsp;&nbsp;@subject.get.name </div>
+              <hr/>
+            @defining(model.Group.find(item.get.group.toString).get) {  group=>
+                <div>Group:&nbsp;&nbsp;@group.name</div>
+            }
+            <hr/>
+        }
+        @defining(model.Room.find(item.get.room.toString).get) {  room=>
+            <div>Room:<br/><br/>
+            <img  @if(room.picture!=""){
+            src="@routes.DeanController.picture(room.picture)"}else{
+            src="@routes.Assets.at("images/room.jpg")"}
+            style="width : 60px; height:60px" class="img-thumbnail">
+            @room.name<br/></div>
+        }
+    }
+</div>
+

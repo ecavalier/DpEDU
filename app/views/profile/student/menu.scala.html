@@ -1,11 +1,24 @@
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
-        <li>
+        <li id="mSchedule">
             <a href="@routes.StudentController.viewSchedule()">Schedule</a>
         </li>
-        <li>
+        <li id="mProfile">
             <a href="@routes.StudentController.openLookAndFeel()">Profile</a>
         </li>
     </ul>
 </div>
+
+<script>
+$(document).ready(function() {
+var pathname = window.location.pathname
+
+if(pathname.indexOf("shedule") >= 0){
+        $("#mSchedule").addClass("active");
+    }
+    if(pathname.indexOf("lookAndFeel") >= 0){
+        $("#mProfile").addClass("active");
+    }
+});
+</script>

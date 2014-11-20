@@ -34,7 +34,7 @@ object LoginController extends Controller {
         case _: Student =>
           Redirect(routes.StudentController.profileInit(user.id.toString))
         case _: Teacher =>
-          Redirect(routes.DeanController.profileInit(user.id.toString))
+          Redirect(routes.TeacherController.profileInit(user.id.toString))
         case _ =>
           Ok(views.html.index.index())
       }

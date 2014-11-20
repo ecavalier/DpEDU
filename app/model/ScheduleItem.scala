@@ -5,6 +5,8 @@ import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
 import se.radley.plugin.salat._
 import mongoContext._
+import com.mongodb.BasicDBObject
+import com.mongodb.casbah.commons.TypeImports.BasicDBObject
 
 
 case class ScheduleItem(id: ObjectId = new ObjectId,
@@ -25,5 +27,12 @@ object ScheduleItem extends ModelCompanion[ScheduleItem, ObjectId] {
 
   def find(groupId: ObjectId, lecture: Int, day: Int, week: Int): Option[ScheduleItem] = {
     dao.findOne(MongoDBObject("group"->groupId, "day" -> day, "week" -> week, "lecture" -> lecture))
+  }
+
+  def findForTeacher(teacherId: ObjectId, lecture: Int, day: Int, week: Int): Option[ScheduleItem] = {
+    val ids = Subject.find(MongoDBObject("teacher"->teacherId)).toList.map(_.id)
+    dao.findOne(MongoDBObject("subject"-> DBObject("$in"->ids), "day" -> day,
+      "week" -> week,
+      "lecture" -> lecture))
   }
 }

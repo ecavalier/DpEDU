@@ -1,7 +1,7 @@
 @()(implicit session: play.api.mvc.Session, req: RequestHeader)
-    @user= @{model.users.User.findByEmail(session.get("username").get).get.asInstanceOf[model.users.DepartmentManager]}
+    @user= @{model.users.User.findByEmail(session.get("username").get).get.asInstanceOf[model.users.Teacher]}
 <div class="row">
-@helper.form(action = routes.DepartmentController.updateProfile(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+@helper.form(action = routes.TeacherController.updateProfile(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
     <div class="col-md-6">
         <div class="form-group">
             <label for="email" class="control-label col-md-2">Email</label>

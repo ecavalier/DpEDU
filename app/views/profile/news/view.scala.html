@@ -1,0 +1,35 @@
+@import model.Joda._
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Add Something</div>
+        <div class="panel-body">
+        @helper.form(action = routes.FeedController.addFeed(), 'class -> "form-horizontal") {
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="text" class="control-label col-md-2">Message Text</label>
+                <div class="col-md-8">
+                    <textarea required="" name="text" class="form-control" rows="3"></textarea>
+                </div>
+            </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Publish</button>
+                </div>
+            </div>
+        }
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Latest News</div>
+        <div class="panel-body">
+            @for(i <- model.Feed.findAll().toList.sortBy(_.date)){
+                @views.html.profile.news.newsItem(i)
+            }
+        </div>
+    </div>
+</div>

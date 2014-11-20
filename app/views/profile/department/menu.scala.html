@@ -10,6 +10,9 @@
         <li id="mPlans">
             <a href="@routes.DepartmentController.planGroupList()">Study Plans</a>
         </li>
+        <li id="mNews">
+            <a href="@routes.FeedController.openFeed()">News</a>
+        </li>
         <li id="mProfile">
             <a href="@routes.DepartmentController.openLookAndFeel()">Profile</a>
         </li>
@@ -28,6 +31,9 @@ $(document).ready(function() {
     }
     if(pathname.indexOf("plan") >= 0){
         $("#mPlans").addClass("active");
+    }
+    if(pathname.indexOf("feed") >= 0){
+        $("#mNews").addClass("active");
     }
     if(pathname.indexOf("lookAndFeel") >= 0){
         $("#mProfile").addClass("active");

@@ -71,7 +71,14 @@ GET         /student/shedule                                                 con
 GET         /student/lookAndFeel                                             controllers.StudentController.openLookAndFeel()
 POST        /student/updateProfile                                           controllers.StudentController.updateProfile()
 
+GET         /teacher/profile/:id                                             controllers.TeacherController.profileInit(id)
+GET         /teacher/shedule                                                 controllers.TeacherController.viewSchedule()
+GET         /teacher/lookAndFeel                                             controllers.TeacherController.openLookAndFeel()
+POST        /teacher/updateProfile                                           controllers.TeacherController.updateProfile()
+GET         /teacher/schedule/table                                          controllers.TeacherController.getShowTable()
 
+GET         /feed                                                            controllers.FeedController.openFeed()
+GET         /feed/insert                                                     controllers.FeedController.addFeed()
 # Map static resources from the /public folder to the /assets URL path
 GET         /assets/*file                                                    controllers.Assets.at(path="/public", file)
 

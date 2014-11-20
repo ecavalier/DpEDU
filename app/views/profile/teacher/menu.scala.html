@@ -1,9 +1,30 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title></title>
-    </head>
-    <body>
+<!-- Sidebar -->
+<div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+        <li id="mSchedule">
+            <a href="@routes.TeacherController.viewSchedule()">Schedule</a>
+        </li>
+        <li id="mNews">
+            <a href="@routes.FeedController.openFeed()">News</a>
+        </li>
+        <li id="mProfile">
+            <a href="@routes.TeacherController.openLookAndFeel()">Profile</a>
+        </li>
+    </ul>
+</div>
 
-</body>
-</html>
+<script>
+$(document).ready(function() {
+    var pathname = window.location.pathname
+
+    if(pathname.indexOf("shedule") >= 0){
+    $("#mSchedule").addClass("active");
+    }
+    if(pathname.indexOf("feed") >= 0){
+    $("#mNews").addClass("active");
+    }
+    if(pathname.indexOf("lookAndFeel") >= 0){
+    $("#mProfile").addClass("active");
+    }
+});
+</script>

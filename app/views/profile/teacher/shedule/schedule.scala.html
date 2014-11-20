@@ -1,0 +1,70 @@
+@(teacher: com.mongodb.casbah.commons.TypeImports.ObjectId, week: Int)
+
+<style type="text/css">
+
+
+td:hover
+{
+cursor: pointer;
+background: #e5e5e5;
+color: #000000;
+}
+</style>
+<table id="schedule" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="col-md-1">Lecture</th>
+            <th class="col-md-2">Monday</th>
+            <th class="col-md-2">Tuesday</th>
+            <th class="col-md-2">Wednesday</th>
+            <th class="col-md-2">Thrusday</th>
+            <th class="col-md-2">Friday</th>
+        </tr>
+    </thead>
+
+    <tr>
+        <th>#1</th>
+        <td id="11">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 1, 1, week))</td>
+        <td id="12">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 1, 2, week))</td>
+        <td id="13">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 1, 3, week))</td>
+        <td id="14">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 1, 4, week))</td>
+        <td id="15">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 1, 5, week))</td>
+    </tr>
+
+    <tr>
+        <th>#2</th>
+        <td id="21">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 2, 1, week))</td>
+        <td id="22">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 2, 2, week))</td>
+        <td id="23">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 2, 3, week))</td>
+        <td id="24">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 2, 4, week))</td>
+        <td id="25">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 2, 5, week))</td>
+    </tr>
+
+    <tr>
+        <th>#3</th>
+        <td id="31">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 3, 1, week))</td>
+        <td id="32">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 3, 2, week))</td>
+        <td id="33">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 3, 3, week))</td>
+        <td id="34">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 3, 4, week))</td>
+        <td id="35">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 3, 5, week))</td>
+    </tr>
+
+    <tr>
+        <th>#4</th>
+        <td id="41">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 4, 1, week))</td>
+        <td id="42">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 4, 2, week))</td>
+        <td id="43">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 4, 3, week))</td>
+        <td id="44">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 4, 4, week))</td>
+        <td id="45">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 4, 5, week))</td>
+    </tr>
+
+    <tr>
+        <th>#5</th>
+        <td id="51">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 5, 1, week))</td>
+        <td id="52">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 5, 2, week))</td>
+        <td id="53">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 5, 3, week))</td>
+        <td id="54">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 5, 4, week))</td>
+        <td id="55">@views.html.profile.teacher.shedule.item(model.ScheduleItem.findForTeacher(teacher, 5, 5, week))</td>
+    </tr>
+</table>
+

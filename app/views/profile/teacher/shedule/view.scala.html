@@ -1,0 +1,42 @@
+@(teacherId: String, week: String)(implicit session: play.api.mvc.Session)
+<div class="row">
+<div class="col-md-3">
+    <div class="form-group">
+        <label for="week" class="control-label ">Week</label>
+        <select id="week" name="week" class="form-control">
+            <option @if(week == "0"){selected} value="0">First Week</option>
+            <option @if(week == "1"){selected} value="1">Second Week</option>
+        </select>
+    </div>
+</div>
+</div>
+<div class="row">
+<div class="panel panel-default">
+    <div class="panel-heading">Schedule</div>
+    <div class="panel-body">
+        <div id="content"></div>
+    </div>
+</div>
+</div>
+
+<script>
+$(document).ready(function() {
+    getTable("@teacherId", $("#week").val())
+    });
+
+
+    $("#week").on('change', function (e) {
+    var valueSelected = this.value;
+    getTable("@teacherId", valueSelected)
+    });
+
+    function getTable(group, week) {
+    $.get(
+        "/teacher/schedule/table?"+
+        "week="+week,
+
+        function(data) { $("#content").html(data);},
+        "html"
+    );
+}
+</script>

@@ -13,6 +13,9 @@
         <li id="mSchedule">
             <a href="@routes.DeanController.openShedule()">Schedule</a>
         </li>
+        <li id="mNews">
+            <a href="@routes.FeedController.openFeed()">News</a>
+        </li>
         <li id="mProfile">
             <a href="@routes.DeanController.openLookAndFeel()">Profile</a>
         </li>
@@ -34,6 +37,9 @@
         }
         if(pathname.indexOf("shedule") >= 0){
             $("#mSchedule").addClass("active");
+        }
+        if(pathname.indexOf("feed") >= 0){
+            $("#mNews").addClass("active");
         }
         if(pathname.indexOf("lookAndFeel") >= 0){
             $("#mProfile").addClass("active");

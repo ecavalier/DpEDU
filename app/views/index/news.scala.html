@@ -1,16 +1,15 @@
+@import model.Joda._
 <div class="intro-body">
     <div class="container">
         <div class="row">
             <div class="col-md-4">
                 <div class="panel panel-primary panel-transparent">
-                    <div class="panel-body">
-                        <h4>News:</h4>
+                    <div class="panel-heading">Latest News</div>
+                    <div class="panel-body" style="height: 250px; overflow-y: scroll;">
                         <div>
-                                TextTextTextTextTextTextTextTextTextTextText
-                            TextTextTextTextTextTextTextTextTextTextText
-                            TextTextTextTextTextTextTextTextTextTextText
-                            TextTextTextTextTextTextTextTextTextTextText
-                            TextTextTextTextTextTextTextTextTextTextText
+                            @for(i <- model.Feed.findAll().toList.sortBy(_.date)){
+                                @views.html.profile.news.newsItem(i)
+                            }
                         </div>
                     </div>
                 </div>
@@ -18,3 +17,5 @@
         </div>
     </div>
 </div>
+
+

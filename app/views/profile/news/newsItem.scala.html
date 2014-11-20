@@ -1,0 +1,19 @@
+@(item: model.Feed)
+@import org.joda.time.format.DateTimeFormat
+<div style="text-align: left">
+    @defining(model.users.User.find(item.author.toString).get) {  author=>
+        <img  @if(author.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
+        src="@routes.DeanController.picture(author.avatar)"}else{
+        src="@routes.Assets.at("images/anonymous.jpg")"}
+        style="width : 30px; height:30px" class="img-circle">
+        @author.email&nbsp;&nbsp;@defining(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm")) { dateFormatter =>
+            @dateFormatter.print(item.date)}<br/>
+    }
+</div>
+<br/>
+<div style="text-align: left">
+    @item.text
+</div>
+    <hr/>
+
+
