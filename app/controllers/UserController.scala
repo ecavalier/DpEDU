@@ -3,9 +3,13 @@ package controllers
 import play.api.mvc._
 import play.api.templates._
 import model.users.{User}
-import play.api.data.Form
-import play.api.data.Forms._
-import play.api.mvc.SimpleResult
+import play.api.Play.current
+import se.radley.plugin.salat
+import java.text.SimpleDateFormat
+import play.api.libs.iteratee.Enumerator
+
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
 
 
 trait UserController extends Controller {
@@ -30,6 +34,22 @@ trait UserController extends Controller {
 
 
   def picture(name: String) = Action {
-    Ok.sendFile(new java.io.File(name))
+
+    import com.mongodb.casbah.Implicits._
+
+    val gridFs = salat.gridFS("photos")
+
+    gridFs.findOne(Map("filename" -> name)) match {
+      case Some(f) => SimpleResult(
+        ResponseHeader(OK, Map(
+          CONTENT_LENGTH -> f.length.toString,
+          CONTENT_TYPE -> f.contentType.getOrElse(BINARY),
+          DATE -> new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", java.util.Locale.US).format(f.uploadDate)
+        )),
+        Enumerator.fromStream(f.inputStream)
+      )
+
+      case None => NotFound
+    }
   }
 }

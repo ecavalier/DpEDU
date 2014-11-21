@@ -2,6 +2,8 @@ package controllers
 
 import play.api.mvc._
 import play.api.libs.Files
+import se.radley.plugin.salat
+import play.api.Play.current
 
 object Application extends Controller {
 
@@ -13,9 +15,13 @@ object Application extends Controller {
                     newFileName: String): String  = {
     var filename = ""
     req.body.file(strMap).map { picture =>
-      import java.io.File
-      filename = dirPath+newFileName
-      picture.ref.moveTo(new File(filename), replace = true)
+      filename = newFileName
+      val gridFs = salat.gridFS("photos")
+      gridFs.remove(filename)
+      val uploadedFile = gridFs.createFile(picture.ref.file)
+      uploadedFile.filename = filename
+      uploadedFile.contentType = picture.contentType.orNull
+      uploadedFile.save()
     }
     filename
   }
