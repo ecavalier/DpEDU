@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="@routes.Assets.at("javascripts/jquery-1.11.0.js")"></script>
+    <script src="@routes.Assets.at("javascripts/bootstrap.min.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jsPDF/jspdf.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jsPDF/jspdf.plugin.standard_fonts_metrics.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jsPDF/jspdf.plugin.split_text_to_size.js")"></script>
+    <script src="@routes.Assets.at("javascripts/jsPDF/jspdf.plugin.from_html.js")"></script>
+  <title></title>
+</head>
+<body>
+    <a href="javascript:demoFromHTML()" class="button">Run Code</a>
+    <div id="testcase">
+        <h1>
+        We support special element handlers. Register them with jQuery-style.
+        </h1>
+    </div>
+
+    <script>
+        function demoFromHTML() {
+        var doc = new jsPDF('p', 'in', 'letter');
+        var source = $('#testcase').first();
+        var specialElementHandlers = {
+        '#bypassme': function(element, renderer) {
+        return true;
+        }
+        };
+
+        doc.fromHTML(
+        $('#testcase').get(0), // [Refer Exact code tutorial][2]HTML string or DOM elem ref.
+        0.5,    // x coord
+        0.5,    // y coord
+        {
+        'width': 7.5, // max width of content on PDF
+        'elementHandlers': specialElementHandlers
+        });
+
+        doc.output('dataurl');
+        }
+    </script>
+</body>
+</html>
