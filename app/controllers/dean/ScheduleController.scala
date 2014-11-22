@@ -4,8 +4,8 @@ import model.ScheduleItem
 import org.bson.types.ObjectId
 import play.api.data.Form
 import play.api.data.Forms._
-import com.lowagie.text.{Element, Document}
-import com.lowagie.text.pdf.PdfWriter
+import com.lowagie.text.{Font, Chunk, Element, Document}
+import com.lowagie.text.pdf.{BaseFont, PdfWriter}
 import java.io._
 import model.users.Student
 import model.users.DeanManager
@@ -84,6 +84,10 @@ object ScheduleController extends DeanController {
             document.add(element.asInstanceOf[Element])
           }
 
+      val courier = BaseFont.createFont(BaseFont.COURIER, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+      val font = new Font(courier, 12, Font.NORMAL)
+      val chunk = new Chunk("",font)
+      document.add(chunk)
       document.close()
       val outputStream = new ByteArrayInputStream(stream.toByteArray)
 

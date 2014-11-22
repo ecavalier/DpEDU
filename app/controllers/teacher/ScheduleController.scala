@@ -1,9 +1,9 @@
 package controllers.teacher
 
 import model.users.{Student, DeanManager, Teacher, User}
-import com.lowagie.text.{Element, Document}
+import com.lowagie.text.{Chunk, Font, Element, Document}
 import java.io._
-import com.lowagie.text.pdf.PdfWriter
+import com.lowagie.text.pdf.{BaseFont, PdfWriter}
 import com.lowagie.text.html.simpleparser.HTMLWorker
 import org.bson.types.ObjectId
 import model.users.Student
@@ -39,7 +39,10 @@ object ScheduleController extends TeacherController{
     for (element <- objects){
       document.add(element.asInstanceOf[Element])
     }
-
+    val courier = BaseFont.createFont(BaseFont.COURIER, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+    val font = new Font(courier, 12, Font.NORMAL)
+    val chunk = new Chunk("",font)
+    document.add(chunk)
     document.close()
     val outputStream = new ByteArrayInputStream(stream.toByteArray)
 
