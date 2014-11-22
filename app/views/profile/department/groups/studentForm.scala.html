@@ -1,4 +1,3 @@
-
 @(title: String, id: String, btn: String, student: model.users.Student, action: Call)(implicit session: play.api.mvc.Session)
 @views.html.profile.genericForm(title, id){
     @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
@@ -50,7 +49,8 @@
                 <div class="col-md-8">
                     <img   id="uploadFile"
                     @if(student!= null && student.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src = "@routes.DeanController.picture(student.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                        src = "@Application.picture(student.avatar)"}else{src = "@routes.Assets.at("images/anonymous" +
+                            ".jpg")"}
                         style="width : 120px; height: 120px" class="img-circle"><br/>
                     <div class="fileUpload btn btn-primary">
                         <span>Upload</span>

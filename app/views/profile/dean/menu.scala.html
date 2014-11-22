@@ -1,23 +1,25 @@
+@import controllers.dean
+
 <!-- Sidebar -->
 <div id="sidebar-wrapper">
     <ul class="sidebar-nav">
         <li id="mDepartment">
-            <a href="@routes.DeanController.departmentList()">Departments</a>
+            <a href="@controllers.dean.routes.DepartmentController.departmentList()">Departments</a>
         </li>
         <li id="mStudents">
-            <a href="@routes.DeanController.searchStudent()">Students</a>
+            <a href="@controllers.dean.routes.StudentSearchController.searchStudent()">Students</a>
         </li>
         <li id="mRooms">
-            <a href="@routes.DeanController.roomsList()">Rooms</a>
+            <a href="@controllers.dean.routes.RoomsController.roomsList()">Rooms</a>
         </li>
         <li id="mSchedule">
-            <a href="@routes.DeanController.openShedule()">Schedule</a>
+            <a href="@controllers.dean.routes.ScheduleController.openSchedule()">Schedule</a>
         </li>
         <li id="mNews">
             <a href="@routes.FeedController.openFeed()">News</a>
         </li>
         <li id="mProfile">
-            <a href="@routes.DeanController.openLookAndFeel()">Profile</a>
+            <a href="@controllers.dean.routes.ProfileController.openLookAndFeel()">Profile</a>
         </li>
     </ul>
 </div>
@@ -29,13 +31,13 @@
         if(pathname.indexOf("departments") >= 0){
             $("#mDepartment").addClass("active");
         }
-        if(pathname.indexOf("student") >= 0 && pathname.indexOf("shedule") < 0){
+        if(pathname.indexOf("student") >= 0 && pathname.indexOf("schedule") < 0){
             $("#mStudents").addClass("active");
         }
         if(pathname.indexOf("rooms") >= 0){
             $("#mRooms").addClass("active");
         }
-        if(pathname.indexOf("shedule") >= 0){
+        if(pathname.indexOf("schedule") >= 0){
             $("#mSchedule").addClass("active");
         }
         if(pathname.indexOf("feed") >= 0){

@@ -43,7 +43,7 @@
                 <div class="col-md-8">
                     <img   id="uploadFile"
                     @if(teacher!= null && teacher.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src = "@routes.DeanController.picture(teacher.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                        src = "@Application.picture(teacher.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
                     style="width : 120px; height: 120px" class="img-circle"><br/>
                     <div class="fileUpload btn btn-primary">
                         <span>Upload</span>

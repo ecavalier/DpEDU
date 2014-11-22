@@ -18,14 +18,17 @@ object StudentController extends UserController {
 
   layout = views.html.profile.student.studentLayout
   profile = routes.StudentController.viewSchedule()
-  lookAndFeelPath =  views.html.profile.student.lookAndFeel
+  val lookAndFeelPath =  views.html.profile.student.lookAndFeel
+  def openLookAndFeel = Action {
+    implicit request => changeView(lookAndFeelPath())
+  }
 
   def viewSchedule() = Action { implicit request =>
     val user = User.findByEmail(session.get("username").get).get.asInstanceOf[Student]
     changeView(views.html.profile.student.schedule.view(user.group.toString, "0"))
   }
 
-  def updateProfile() = Action(parse.multipartFormData) { implicit request =>
+  def updateProfile() = Action{ implicit request =>
     val (email, password, theme, phone) = profileForm.bindFromRequest().get
     val u = User.findByEmail(session.get("username").get).get.asInstanceOf[Student]
     val filename= Application.pictureUpload(request, "avatar", "/home/ivan/appTest/", u.id.toString)
@@ -40,4 +43,5 @@ object StudentController extends UserController {
     )
   }
 
+  val role: Array[String] = Array()
 }

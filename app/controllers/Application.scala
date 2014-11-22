@@ -4,6 +4,10 @@ import play.api.mvc._
 import play.api.libs.Files
 import se.radley.plugin.salat
 import play.api.Play.current
+import java.text.SimpleDateFormat
+import play.api.libs.iteratee.Enumerator
+import scala.concurrent.ExecutionContext
+import ExecutionContext.Implicits.global
 
 object Application extends Controller {
 
@@ -11,10 +15,10 @@ object Application extends Controller {
     Ok(views.html.index.index())
   }
 
-  def pictureUpload(req: Request[MultipartFormData[Files.TemporaryFile]], strMap: String, dirPath: String,
+  def pictureUpload(req: Request[AnyContent], strMap: String, dirPath: String,
                     newFileName: String): String  = {
     var filename = ""
-    req.body.file(strMap).map { picture =>
+    req.body.asMultipartFormData.get.file(strMap).map { picture =>
       filename = newFileName
       val gridFs = salat.gridFS("photos")
       gridFs.remove(filename)
@@ -26,4 +30,24 @@ object Application extends Controller {
     filename
   }
 
+
+  def picture(name: String) = Action {
+
+    import com.mongodb.casbah.Implicits._
+
+    val gridFs = salat.gridFS("photos")
+
+    gridFs.findOne(Map("filename" -> name)) match {
+      case Some(f) => SimpleResult(
+        ResponseHeader(OK, Map(
+          CONTENT_LENGTH -> f.length.toString,
+          CONTENT_TYPE -> f.contentType.getOrElse(BINARY),
+          DATE -> new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", java.util.Locale.US).format(f.uploadDate)
+        )),
+        Enumerator.fromStream(f.inputStream)
+      )
+
+      case None => NotFound
+    }
+  }
 }

@@ -12,9 +12,9 @@
         </thead>
         @for(d <- model.Department.findAll()) {
             <tr>
-                <td><a href="@routes.DeanController.detailsDepartment(d.id.toString)">@d.name</a></td>
+                <td><a href="@controllers.dean.routes.DepartmentController.detailsDepartment(d.id.toString)">@d.name</a></td>
                 <td>@d.description</td>
-                <td><a class="btn btn-danger" href="@routes.DeanController.deleteDepartment(d.id.toString)">Remove</a>
+                <td><a class="btn btn-danger" href="@controllers.dean.routes.DepartmentController.deleteDepartment(d.id.toString)">Remove</a>
                     <a class="btn btn-primary" onclick="onEdit('@d.id')" >Edit</a></td>
             </tr>
         }
@@ -27,7 +27,7 @@
         <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
     </div>
 </div>
-@form("Create New Department", "createForm", "Create", null, routes.DeanController.insertDepartment())
+@form("Create New Department", "createForm", "Create", null, controllers.dean.routes.DepartmentController.insertDepartment())
 <div id="editContent"></div>
 
 <script>

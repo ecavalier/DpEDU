@@ -4,7 +4,6 @@ import play.api.mvc.{Action, Controller}
 import play.api.data.Form
 import play.api.data.Forms._
 import model.users._
-import com.mongodb.casbah.commons.TypeImports.ObjectId
 import model.{users, Feed}
 import org.joda.time.DateTime
 import model.users.Student
@@ -25,7 +24,7 @@ object FeedController extends Controller {
       case _: DepartmentManager =>
         DepartmentController.changeView(views.html.profile.news.view())
       case _: DeanManager =>
-        DeanController.changeView(views.html.profile.news.view())
+        dean.ProfileController.changeView(views.html.profile.news.view())
       case _: Student =>
         StudentController.changeView(views.html.profile.news.view())
       case _: Teacher =>
@@ -41,7 +40,7 @@ object FeedController extends Controller {
       case _: DepartmentManager =>
           DepartmentController.changeView(views.html.profile.news.view())
       case _: DeanManager =>
-          DeanController.changeView(views.html.profile.news.view())
+        dean.ProfileController.changeView(views.html.profile.news.view())
       case _: Student =>
           StudentController.changeView(views.html.profile.news.view())
       case _: Teacher =>

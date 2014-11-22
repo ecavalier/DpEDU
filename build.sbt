@@ -6,6 +6,7 @@ version := "1.0"
 
 playScalaSettings
 
+
 libraryDependencies ++= Seq(
   jdbc,
   cache,
@@ -14,3 +15,5 @@ libraryDependencies ++= Seq(
   "se.radley" %% "play-plugins-salat" % "1.5.0",
   "net.databinder" %% "unfiltered-filter" % "0.6.4"
 )
+
+

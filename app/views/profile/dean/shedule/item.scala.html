@@ -7,7 +7,7 @@
               <hr/>
             @defining(model.users.User.find(subject.get.teacher.toString).get.asInstanceOf[model.users.Teacher]) {  teacher=>
                 <div>Teacher:<br/><br/><img  @if(teacher.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                src="@routes.DeanController.picture(teacher.avatar)"}else{
+                src="@routes.Application.picture(teacher.avatar)"}else{
                 src="@routes.Assets.at("images/anonymous.jpg")"}
                 style="width : 60px; height:60px" class="img-circle">
                 @teacher.fullName<br/></div>
@@ -17,7 +17,7 @@
         @defining(model.Room.find(item.get.room.toString).get) {  room=>
             <div>Room:<br/><br/>
             <img  @if(room.picture!=""){
-            src="@routes.DeanController.picture(room.picture)"}else{
+            src="@routes.Application.picture(room.picture)"}else{
             src="@routes.Assets.at("images/room.jpg")"}
             style="width : 60px; height:60px" class="img-thumbnail">
             @room.name<br/></div>

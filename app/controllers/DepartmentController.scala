@@ -13,7 +13,10 @@ object DepartmentController extends UserController {
 
   layout = views.html.profile.department.departmentLayout
   profile = routes.DepartmentController.groupList()
-  lookAndFeelPath =  views.html.profile.department.lookAndFeel
+  val lookAndFeelPath =  views.html.profile.department.lookAndFeel
+  def openLookAndFeel = Action {
+    implicit request => changeView(lookAndFeelPath())
+  }
 
   val profileForm = Form(
     tuple(
@@ -64,7 +67,7 @@ object DepartmentController extends UserController {
       .asInstanceOf[DepartmentManager].departmentId.toString))
   }
 
-  def addTeacher() = Action(parse.multipartFormData) { implicit request =>
+  def addTeacher() = Action{ implicit request =>
     val (fullName, position, email, password) = teacherForm.bindFromRequest().get
     val departmentId  =
       users.User.findByEmail(session.get("username").get).get.asInstanceOf[users.DepartmentManager].departmentId
@@ -83,7 +86,7 @@ object DepartmentController extends UserController {
       User.find(id).get.asInstanceOf[Teacher], routes.DepartmentController.saveTeacher(id)))
   }
 
-  def saveTeacher(id: String) = Action(parse.multipartFormData) { implicit request =>
+  def saveTeacher(id: String) = Action{ implicit request =>
     val (fullName, position, email, password) = teacherForm.bindFromRequest().get
     val filename= Application.pictureUpload(request, "picture", "/home/ivan/appTest/", id)
     val teacher = User.find(id).get.asInstanceOf[Teacher]
@@ -129,7 +132,7 @@ object DepartmentController extends UserController {
   }
 
   //Student
-  def addStudent(id: String) = Action(parse.multipartFormData) { implicit request =>
+  def addStudent(id: String) = Action { implicit request =>
     val (fullName, email, password, phone, isElder) = studentForm.bindFromRequest().get
     val studentId = User.insert(Student(fullName=fullName, email=email, password=password, phone = phone,
       group = new ObjectId(id)))
@@ -157,7 +160,7 @@ object DepartmentController extends UserController {
       User.find(id).get.asInstanceOf[Student], routes.DepartmentController.saveStudent(id, groupId)))
   }
 
-  def saveStudent(id: String, groupId: String) = Action(parse.multipartFormData) { implicit request =>
+  def saveStudent(id: String, groupId: String) = Action { implicit request =>
     val (fullName, email, password, phone, isElder) = studentForm.bindFromRequest().get
     val student = User.find(id).get.asInstanceOf[Student]
     if(isElder){
@@ -208,7 +211,7 @@ object DepartmentController extends UserController {
   }
 
   //Profile Section
-  def updateProfile() = Action(parse.multipartFormData) { implicit request =>
+  def updateProfile() = Action { implicit request =>
     val (email, password, theme) = profileForm.bindFromRequest().get
     val u = User.findByEmail(session.get("username").get).get.asInstanceOf[DepartmentManager]
     val filename= Application.pictureUpload(request, "avatar", "/home/ivan/appTest/", u.id.toString)
@@ -223,5 +226,5 @@ object DepartmentController extends UserController {
     )
   }
 
-
+  val role: Array[String] = Array()
 }

@@ -14,7 +14,7 @@
         @for(m <- model.Department.getManagers(departmentId)) {
             <tr>
                 <td>@m.email</td>
-                <td><a class="btn btn-danger" href="@routes.DeanController.removeManager(m.id.toString)">Remove</a>
+                <td><a class="btn btn-danger" href="@controllers.dean.DepartmentController.removeManager(m.id.toString)">Remove</a>
                     <a class="btn btn-primary" onclick="onEdit('@m.id')">Edit</a></td>
             </tr>
         }
@@ -27,7 +27,7 @@
         <a class="btn btn-primary" data-toggle="modal" data-target="#createForm">Add New</a>
     </div>
 </div>
-@managerForm("Add Department Manager", "createForm", "Create", null, routes.DeanController.addManager(departmentId))
+@managerForm("Add Department Manager", "createForm", "Create", null, controllers.dean.routes.DepartmentController.addManager(departmentId))
 <div id="editContent"></div>
 
 <script>

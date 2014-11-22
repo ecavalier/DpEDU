@@ -17,7 +17,7 @@
                 <td>@if(s.teacher != null){
                     @defining(model.users.User.find(s.teacher.toString).get.asInstanceOf[model.users.Teacher]) {  teacher=>
                         <img  @if(teacher.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(teacher.avatar)"}else{
+                        src="@Application.picture(teacher.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @teacher.fullName

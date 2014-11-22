@@ -1,4 +1,5 @@
 @()(implicit session: play.api.mvc.Session)
+
 <div class="panel panel-default">
     <div class="panel-heading">Group List</div>
         <!-- Table -->
@@ -19,14 +20,14 @@
                 <td><a href="@routes.DepartmentController.groupDetails(g.id.toString)">@g.name</a></td>
                 <td>@model.Group.getStudentsCount(g.id)</td>
                 <td><img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(curator.avatar)"}else{
+                        src="@Application.picture(curator.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @curator.fullName</td>
                     <td>@if(g.elder != null){
                     @defining(model.users.User.find(g.elder.toString).get.asInstanceOf[model.users.Student]) {  elder=>
                         <img  @if(elder.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(elder.avatar)"}else{
+                        src="@Application.picture(elder.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @elder.fullName

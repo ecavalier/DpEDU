@@ -7,7 +7,6 @@ import model.users._
 import model.users.Student
 import model.users.DepartmentManager
 import model.users.DeanManager
-
 object LoginController extends Controller {
 
   val loginForm = Form(
@@ -20,39 +19,37 @@ object LoginController extends Controller {
   )
 
   def check(username: String, password: String) = {
-    !User.findByEmail(username).isEmpty
+    currentUser = User.findByEmail(username).get
+    true
   }
+
+  var currentUser: User = _
 
   def login = Action {
     implicit request =>
-      val user = User.findByEmail(session.get("username").get).get
-      user match {
-        case _: DepartmentManager =>
-          Redirect(routes.DepartmentController.profileInit(user.id.toString))
-        case _: DeanManager =>
-          Redirect(routes.DeanController.profileInit(user.id.toString))
-        case _: Student =>
-          Redirect(routes.StudentController.profileInit(user.id.toString))
-        case _: Teacher =>
-          Redirect(routes.TeacherController.profileInit(user.id.toString))
-        case _ =>
-          Ok(views.html.index.index())
+      if(session.get("username").isEmpty){
+        val (username, password) = loginForm.bindFromRequest().get
+        currentUser = User.findByEmail(username).get
+      }else{
+        currentUser = User.findByEmail(session.get("username").get).get
       }
-
+      currentUser match {
+        case _: DepartmentManager =>
+      Redirect(routes.DepartmentController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
+        case _: DeanManager =>
+          Redirect(dean.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security.username ->
+            currentUser.email)
+        case _: Student =>
+          Redirect(routes.StudentController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
+        case _: Teacher =>
+          Redirect(routes.TeacherController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
+        case _ =>
+          Ok(views.html.accessFailed())
+      }
   }
 
-  def authenticate = Action {
-    implicit request =>
-      loginForm.bindFromRequest.fold(
-        formWithErrors => BadRequest(views.html.index.index()),
-        user => Redirect(routes.LoginController.login()).withSession(Security.username -> user._1)
-      )
-  }
-
-  def logOut = Action {
-    implicit request =>
-      session.+("username", "")
-      Ok(views.html.index.index())
+  def logOut = Action { implicit request =>
+      Redirect(routes.Application.index()).withNewSession
   }
 
 }

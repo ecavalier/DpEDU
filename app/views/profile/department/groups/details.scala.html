@@ -9,7 +9,7 @@
             <div><label class="col-md-2">Curator:&nbsp;</label>
             @defining(model.users.User.find(group.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
                 <img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(curator.avatar)"}else{
+                        src="@Application.picture(curator.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @curator.fullName
@@ -20,7 +20,7 @@
                 @if(group.elder != null){
                 @defining(model.users.User.find(group.elder.toString).get.asInstanceOf[model.users.Student]) {  elder=>
                     <img  @if(elder.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                    src="@routes.DeanController.picture(elder.avatar)"}else{
+                    src="@Application.picture(elder.avatar)"}else{
                     src="@routes.Assets.at("images/anonymous.jpg")"}
                     style="width : 60px; height:60px" class="img-circle">
                     @elder.fullName
@@ -58,7 +58,7 @@
             @for(t <- model.Group.getStudentsByGroupId(group.id)) {
                 <tr>
                     <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@routes.DeanController.picture(t.avatar)"}else{
+                        src="@Application.picture(t.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @t.fullName</td>

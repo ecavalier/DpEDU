@@ -3,7 +3,7 @@
 <div style="text-align: left">
     @defining(model.users.User.find(item.author.toString).get) {  author=>
         <img  @if(author.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-        src="@routes.DeanController.picture(author.avatar)"}else{
+        src="@routes.Application.picture(author.avatar)"}else{
         src="@routes.Assets.at("images/anonymous.jpg")"}
         style="width : 30px; height:30px" class="img-circle">
         @author.email&nbsp;&nbsp;@defining(DateTimeFormat.forPattern("yyyy-MM-dd HH:mm")) { dateFormatter =>

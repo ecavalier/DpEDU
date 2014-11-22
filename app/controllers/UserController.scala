@@ -12,15 +12,11 @@ import scala.concurrent.ExecutionContext
 import ExecutionContext.Implicits.global
 
 
-trait UserController extends Controller {
+trait UserController extends Controller with Secured {
 
   var layout: {def apply(content: Html, user: User): HtmlFormat.Appendable} = _
   var profile: Call = _
-  var lookAndFeelPath: {def apply()(implicit session: Session, req: RequestHeader): HtmlFormat.Appendable} = _
 
-  def openLookAndFeel = Action {
-    implicit request => changeView(lookAndFeelPath())
-  }
 
   def changeView(view: Html)(implicit session: Session) = {
     val user = User.findByEmail(session.get("username").get).get
@@ -30,26 +26,5 @@ trait UserController extends Controller {
   def profileInit(id: String) = Action {
     implicit request =>
       Redirect(profile)
-  }
-
-
-  def picture(name: String) = Action {
-
-    import com.mongodb.casbah.Implicits._
-
-    val gridFs = salat.gridFS("photos")
-
-    gridFs.findOne(Map("filename" -> name)) match {
-      case Some(f) => SimpleResult(
-        ResponseHeader(OK, Map(
-          CONTENT_LENGTH -> f.length.toString,
-          CONTENT_TYPE -> f.contentType.getOrElse(BINARY),
-          DATE -> new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'", java.util.Locale.US).format(f.uploadDate)
-        )),
-        Enumerator.fromStream(f.inputStream)
-      )
-
-      case None => NotFound
-    }
   }
 }

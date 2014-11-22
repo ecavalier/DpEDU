@@ -14,9 +14,10 @@
             <tr>
                 <td>@r.name</td>
                 <td>@r.roomType</td>
-                <td><img  @if(r.picture!=""){src="@routes.DeanController.picture(r.picture)"}else{src="@routes.Assets.at("images/room.jpg")"} style="height :
+                <td><img  @if(r.picture!=""){src="@routes.Application.picture(r.picture)"}else{src="@routes.Assets.at("images/room" +
+                        ".jpg")"} style="height :
                     120px;" class="img-thumbnail"></td>
-                <td><a class="btn btn-danger" href="@routes.DeanController.removeRoom(r.id.toString)">Remove</a>
+                <td><a class="btn btn-danger" href="@controllers.dean.routes.RoomsController.removeRoom(r.id.toString)">Remove</a>
                     <a class="btn btn-primary" onclick="onEdit('@r.id')" >Edit</a></td>
             </tr>
         }
@@ -32,7 +33,7 @@
 
 <div id="editContent"></div>
 
-@form("Create New Room", "createForm", "Create", null, routes.DeanController.addRoom())
+@form("Create New Room", "createForm", "Create", null, controllers.dean.routes.RoomsController.addRoom())
 <script>
     function onEdit(id){
         $.get(

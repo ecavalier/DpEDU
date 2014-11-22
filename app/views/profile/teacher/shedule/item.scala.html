@@ -1,4 +1,5 @@
 @(item:  Option[model.ScheduleItem])
+@import controllers.dean.DeanController
 <div id="item" >
     @if(!item.isEmpty) {
 
@@ -13,7 +14,7 @@
         @defining(model.Room.find(item.get.room.toString).get) {  room=>
             <div>Room:<br/><br/>
             <img  @if(room.picture!=""){
-            src="@routes.DeanController.picture(room.picture)"}else{
+            src="@Application.picture(room.picture)"}else{
             src="@routes.Assets.at("images/room.jpg")"}
             style="width : 60px; height:60px" class="img-thumbnail">
             @room.name<br/></div>

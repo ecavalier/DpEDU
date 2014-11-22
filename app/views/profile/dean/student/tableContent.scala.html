@@ -12,7 +12,7 @@
     @for(t <- list) {
         <tr>
             <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                src="@routes.DeanController.picture(t.avatar)"}else{
+                src="@routes.Application.picture(t.avatar)"}else{
                 src="@routes.Assets.at("images/anonymous.jpg")"}
                 style="width : 60px; height:60px" class="img-circle">
                 @t.fullName</td>

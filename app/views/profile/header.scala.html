@@ -18,7 +18,7 @@
                 </li>
                 <li><a>
                     <img  @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
-                    src = "@routes.DeanController.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+                    src = "@routes.Application.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
                     style="width : 32px; height:32px" class="img-circle"></a>
                 </li>
                 <li><a href="/logout">log out</a></li>
