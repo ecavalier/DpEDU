@@ -20,8 +20,14 @@
             <td>@t.status</td>
             <td>@if(!model.Group.find(t.group.toString).isEmpty){@model.Group.find(t.group.toString).get.name}</td>
             <td>
-                <a class="btn btn-danger" href="#">Remove</a>
-                <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
+                @if(t.status == "Active"){
+                    <a class="btn btn-danger" href="@controllers.dean.routes.StudentSearchController.removeStudent(t.id.toString)
+                    ">Remove</a>
+                }else{
+                    <a class="btn btn-success" href="@controllers.dean.routes.StudentSearchController.restoreStudent(t.id.toString)
+                    ">Restore</a>
+                }
+
         </tr>
     }
 </table>

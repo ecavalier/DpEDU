@@ -14,13 +14,13 @@
         @for(t <- model.Department.getTeachers(departmentId)) {
             <tr>
                 <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                    src="@Application.picture(t.avatar)"}else{
+                    src="@routes.Application.picture(t.avatar)"}else{
                     src="@routes.Assets.at("images/anonymous.jpg")"}
                     style="width : 60px; height:60px" class="img-circle">
                     @t.fullName</td>
                 <td>@t.email</td>
                 <td>@t.position</td>
-                <td><a class="btn btn-danger" href="@routes.DepartmentController.removeTeacher(t.id.toString)">Remove</a>
+                <td><a class="btn btn-danger" href="@controllers.department.routes.TeacherController.removeTeacher(t.id.toString)">Remove</a>
                     <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
             </tr>
         }
@@ -36,7 +36,7 @@
 
 <div id="editContent"></div>
 
-@form("Add Teacher", "createForm", "Create", null, routes.DepartmentController.addTeacher())
+@form("Add Teacher", "createForm", "Create", null, controllers.department.routes.TeacherController.addTeacher())
 <script>
 function onEdit(id){
     $.get(

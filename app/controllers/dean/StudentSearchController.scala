@@ -5,6 +5,7 @@ import org.bson.types.ObjectId
 import play.api.data.Form
 import play.api.data.Forms._
 import model.StudentFilter
+import model.users.{StudentStatus, Student, User}
 
 object StudentSearchController extends DeanController {
 
@@ -34,7 +35,18 @@ object StudentSearchController extends DeanController {
         group = null) )
       Ok(views.html.profile.dean.student.tableContent(list))
     }
+  }
 
+  def removeStudent(id: String) =  withUser { user => implicit request =>
+    val student = User.find(id).get.asInstanceOf[Student]
+    User.save(student.copy(status = StudentStatus.Removed.toString))
+    changeView(views.html.profile.dean.student.list(new model.StudentFilter()))
+  }
+
+  def restoreStudent(id: String) =  withUser { user => implicit request =>
+    val student = User.find(id).get.asInstanceOf[Student]
+    User.save(student.copy(status = StudentStatus.Active.toString))
+    changeView(views.html.profile.dean.student.list(new model.StudentFilter()))
   }
 
 }

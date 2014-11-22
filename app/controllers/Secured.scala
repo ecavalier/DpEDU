@@ -24,10 +24,6 @@ trait Secured {
    */
   def withUser(f: User => Request[AnyContent] => Result) = withAuth { username => implicit request =>
     User.findByEmail(username).map { user =>
-      System.out.println(user.getClass.getName+"$")
-      for ( x <- role ) {
-        println( x )
-      }
       if(role contains (user.getClass.getName+"$")){
         f(user)(request)
       }else{
@@ -39,7 +35,6 @@ trait Secured {
   def withUser(currentRole: Array[Class[_]])(f: User => Request[AnyContent] => Result) = withAuth { username =>
     implicit request =>
     User.findByEmail(username).map { user =>
-      System.out.println(user.getClass.getName+"$")
       val x = currentRole.map(_.getName)
       if(x contains (user.getClass.getName+"$")){
         f(user)(request)

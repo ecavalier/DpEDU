@@ -4,7 +4,16 @@ import model.ScheduleItem
 import org.bson.types.ObjectId
 import play.api.data.Form
 import play.api.data.Forms._
-import model.users.{Student, DeanManager}
+import com.lowagie.text.{Element, Document}
+import com.lowagie.text.pdf.PdfWriter
+import java.io._
+import model.users.Student
+import model.users.DeanManager
+import model.users.Teacher
+import org.apache.commons.io.IOUtils
+import com.lowagie.text.html.simpleparser.HTMLWorker
+import scala.collection.JavaConverters._
+
 
 object ScheduleController extends DeanController {
 
@@ -58,5 +67,29 @@ object ScheduleController extends DeanController {
     val group = request.getQueryString("group").get
     val week = request.getQueryString("week").get
     Ok(views.html.profile.dean.shedule.schedule(new ObjectId(group), week.toInt))
+  }
+
+  def schedulePDF(group: String, week: String) = withUser(Array[Class[_]](DeanManager.getClass, Student.getClass,
+    Teacher.getClass)) { user => implicit request =>
+      val document = new Document()
+      val stream =  new ByteArrayOutputStream()
+      val f=File.createTempFile("schedule", ".pdf")
+      PdfWriter.getInstance(document, stream)
+      document.open()
+      val objects = HTMLWorker.parseToList(
+        new StringReader(views.html.profile.dean.shedule.pdf(
+          new ObjectId(group), week.toInt).toString()), null).asScala
+
+        for (element <- objects){
+            document.add(element.asInstanceOf[Element])
+          }
+
+      document.close()
+      val outputStream = new ByteArrayInputStream(stream.toByteArray)
+
+      val out = new FileOutputStream(f)
+      IOUtils.copy(outputStream, out);
+
+      Ok.sendFile(f)
   }
 }

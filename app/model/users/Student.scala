@@ -12,7 +12,7 @@ object StudentStatus extends Enumeration {
 case class Student(id: ObjectId = new ObjectId,
                    fullName: String,
                    email: String,
-                   password: String,
+                   var password: String ="",
                    var theme: String = "bootstrap.min.css",
                    status: String = StudentStatus.Active.toString,
                    phone: String,

@@ -1,4 +1,6 @@
 @(group: model.Group)(implicit session: play.api.mvc.Session)
+@import controllers.department.DepartmentController
+@import controllers.department.DepartmentController
 <div class="panel panel-default">
     <div class="panel-heading">Subjects List</div>
     <table class="table">
@@ -17,12 +19,13 @@
                 <td>@if(s.teacher != null){
                     @defining(model.users.User.find(s.teacher.toString).get.asInstanceOf[model.users.Teacher]) {  teacher=>
                         <img  @if(teacher.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@Application.picture(teacher.avatar)"}else{
+                        src="@routes.Application.picture(teacher.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @teacher.fullName
                     }}</td>
-                <td><a class="btn btn-danger" href="@routes.DepartmentController.removeSubject(s.id.toString, group.id.toString)">Remove</a>
+                <td><a class="btn btn-danger" href="@controllers.department.routes.StudyPlanController.removeSubject(s.id.toString,
+                    group.id.toString)">Remove</a>
                     <a class="btn btn-primary" onclick="onEdit('@s.id')" >Edit</a></td>
             </tr>
         }
@@ -35,7 +38,7 @@
     </div>
 </div>
 
-@form("Add Subject", "createForm", "Create", null, routes.DepartmentController.addSubject(group.id.toString))
+@form("Add Subject", "createForm", "Create", null, controllers.department.routes.StudyPlanController.addSubject(group.id.toString))
 
 <div id="editContent"></div>
 

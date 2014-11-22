@@ -9,7 +9,7 @@
             <div><label class="col-md-2">Curator:&nbsp;</label>
             @defining(model.users.User.find(group.curator.toString).get.asInstanceOf[model.users.Teacher]) {  curator=>
                 <img  @if(curator.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@Application.picture(curator.avatar)"}else{
+                        src="@routes.Application.picture(curator.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @curator.fullName
@@ -20,7 +20,7 @@
                 @if(group.elder != null){
                 @defining(model.users.User.find(group.elder.toString).get.asInstanceOf[model.users.Student]) {  elder=>
                     <img  @if(elder.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                    src="@Application.picture(elder.avatar)"}else{
+                    src="@routes.Application.picture(elder.avatar)"}else{
                     src="@routes.Assets.at("images/anonymous.jpg")"}
                     style="width : 60px; height:60px" class="img-circle">
                     @elder.fullName
@@ -35,8 +35,8 @@
     </div>
 </div>
 
-@form("Edit Group", "groupEditForm", "Update", group, routes.DepartmentController.saveGroup(group.id.toString))
-@studentForm("Add Student", "studentForm", "Create", null, routes.DepartmentController.addStudent(group.id.toString))
+@form("Edit Group", "groupEditForm", "Update", group, controllers.department.routes.GroupController.saveGroup(group.id.toString))
+@studentForm("Add Student", "studentForm", "Create", null, controllers.department.routes.StudentController.addStudent(group.id.toString))
 
 <div id="editContent"></div>
 
@@ -58,14 +58,13 @@
             @for(t <- model.Group.getStudentsByGroupId(group.id)) {
                 <tr>
                     <td><img  @if(t.avatar!="@routes.Assets.at(\"images/anonymous.jpg\")"){
-                        src="@Application.picture(t.avatar)"}else{
+                        src="@routes.Application.picture(t.avatar)"}else{
                         src="@routes.Assets.at("images/anonymous.jpg")"}
                         style="width : 60px; height:60px" class="img-circle">
                         @t.fullName</td>
                     <td>@t.email</td>
                     <td>@t.status</td>
-                    <td><a class="btn btn-danger"
-                        href="@routes.DepartmentController.removeStudent(t.id.toString, group.id.toString)">Remove</a>
+                    <td>
                         <a class="btn btn-primary" onclick="onEdit('@t.id')" >Edit</a></td>
                 </tr>
             }

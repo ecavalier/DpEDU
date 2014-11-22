@@ -5,7 +5,7 @@
         @for(g <- model.Department.getGroups(model.users.User.findByEmail(session.get("username").get)
                 .get.asInstanceOf[model.users.DepartmentManager].departmentId.toString)) {
                 <tr>
-                    <td><a href="@routes.DepartmentController.planList(g.id.toString)">@g.name</a></td>
+                    <td><a href="@controllers.department.routes.StudyPlanController.planList(g.id.toString)">@g.name</a></td>
                 </tr>
         }
         </table>

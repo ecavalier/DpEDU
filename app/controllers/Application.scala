@@ -1,7 +1,6 @@
 package controllers
 
 import play.api.mvc._
-import play.api.libs.Files
 import se.radley.plugin.salat
 import play.api.Play.current
 import java.text.SimpleDateFormat

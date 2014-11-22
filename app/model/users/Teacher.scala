@@ -10,7 +10,7 @@ object TeacherPosition extends Enumeration {
 
 case class Teacher(id: ObjectId = new ObjectId,
                    email: String,
-                   password: String,
+                   var password: String ="",
                    var theme: String = "bootstrap.min.css",
                    fullName: String,
                    position: String,

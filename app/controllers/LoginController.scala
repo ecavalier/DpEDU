@@ -7,6 +7,7 @@ import model.users._
 import model.users.Student
 import model.users.DepartmentManager
 import model.users.DeanManager
+
 object LoginController extends Controller {
 
   val loginForm = Form(
@@ -19,33 +20,57 @@ object LoginController extends Controller {
   )
 
   def check(username: String, password: String) = {
-    currentUser = User.findByEmail(username).get
-    true
+    if(!User.findByEmail(username).isEmpty){
+      currentUser = User.findByEmail(username).get
+      true
+    }else{
+      false
+    }
+
   }
 
   var currentUser: User = _
 
   def login = Action {
     implicit request =>
-      if(session.get("username").isEmpty){
+      if(!loginForm.bindFromRequest().hasErrors){
         val (username, password) = loginForm.bindFromRequest().get
         currentUser = User.findByEmail(username).get
+        println(password)
+        println(currentUser.password)
+        if(password == currentUser.password){
+          auth
+        }else{
+          Redirect(routes.Application.index()).withNewSession
+        }
       }else{
-        currentUser = User.findByEmail(session.get("username").get).get
+        Redirect(routes.Application.index()).withNewSession
       }
-      currentUser match {
-        case _: DepartmentManager =>
-      Redirect(routes.DepartmentController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
-        case _: DeanManager =>
-          Redirect(dean.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security.username ->
-            currentUser.email)
-        case _: Student =>
-          Redirect(routes.StudentController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
-        case _: Teacher =>
-          Redirect(routes.TeacherController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser.email)
-        case _ =>
-          Ok(views.html.accessFailed())
-      }
+  }
+
+  def reAuth = Action {
+    implicit request =>
+      currentUser = User.findByEmail(session.get("username").get).get
+      auth
+  }
+
+  def auth = {
+    currentUser match {
+      case _: DepartmentManager =>
+        Redirect(department.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security
+          .username -> currentUser.email)
+      case _: DeanManager =>
+        Redirect(dean.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security.username ->
+          currentUser.email)
+      case _: Student =>
+        Redirect(student.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser
+          .email)
+      case _: Teacher =>
+        Redirect(teacher.routes.ProfileController.profileInit(currentUser.id.toString)).withSession(Security.username -> currentUser
+          .email)
+      case _ =>
+        Ok(views.html.accessFailed())
+    }
   }
 
   def logOut = Action { implicit request =>

@@ -22,13 +22,13 @@ object FeedController extends Controller {
     Feed.insert(Feed(author = user.id, text = text, date= DateTime.now()))
     user match {
       case _: DepartmentManager =>
-        DepartmentController.changeView(views.html.profile.news.view())
+        department.ProfileController.changeView(views.html.profile.news.view())
       case _: DeanManager =>
         dean.ProfileController.changeView(views.html.profile.news.view())
       case _: Student =>
-        StudentController.changeView(views.html.profile.news.view())
+        student.ProfileController.changeView(views.html.profile.news.view())
       case _: Teacher =>
-        TeacherController.changeView(views.html.profile.news.view())
+        teacher.ProfileController.changeView(views.html.profile.news.view())
       case _ =>
         Ok(views.html.index.index())
     }
@@ -38,13 +38,13 @@ object FeedController extends Controller {
     val user = users.User.findByEmail(session.get("username").get).get
     user match {
       case _: DepartmentManager =>
-          DepartmentController.changeView(views.html.profile.news.view())
+        department.ProfileController.changeView(views.html.profile.news.view())
       case _: DeanManager =>
         dean.ProfileController.changeView(views.html.profile.news.view())
       case _: Student =>
-          StudentController.changeView(views.html.profile.news.view())
+        student.ProfileController.changeView(views.html.profile.news.view())
       case _: Teacher =>
-        TeacherController.changeView(views.html.profile.news.view())
+        teacher.ProfileController.changeView(views.html.profile.news.view())
       case _ =>
         Ok(views.html.index.index())
     }

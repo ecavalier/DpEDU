@@ -1,12 +1,13 @@
-package controllers.dean
+package controllers.teacher
 
+import model.users.User
+import controllers.Application
+import play.api.mvc.Security
 import play.api.data.Form
 import play.api.data.Forms._
-import model.users.{DeanManager, User}
-import controllers.Application
-import play.api.mvc.{Security}
+import model.users.Teacher
 
-object ProfileController extends DeanController {
+object ProfileController extends TeacherController {
 
   val profileForm = Form(
     tuple(
@@ -16,14 +17,14 @@ object ProfileController extends DeanController {
     )
   )
 
-  val lookAndFeelPath = views.html.profile.dean.lookAndFeel
+  val lookAndFeelPath =  views.html.profile.teacher.lookAndFeel
   def openLookAndFeel = withUser { user => implicit request =>
-    changeView(lookAndFeelPath())
+      changeView(lookAndFeelPath())
   }
 
-  def updateProfile = withUser{ user => implicit request =>
+  def updateProfile() = withUser { user => implicit request =>
     val (email, password, theme) = profileForm.bindFromRequest().get
-    val u = User.findByEmail(session.get("username").get).get.asInstanceOf[DeanManager]
+    val u = User.findByEmail(session.get("username").get).get.asInstanceOf[Teacher]
     val filename= Application.pictureUpload(request, "avatar", "/home/ivan/appTest/", u.id.toString)
     if(filename != ""){
       User.save(u.copy(email = email, password=password, theme=theme, avatar=filename))
@@ -35,5 +36,4 @@ object ProfileController extends DeanController {
       user => Redirect(controllers.routes.LoginController.reAuth()).withSession(Security.username -> user._1)
     )
   }
-
 }

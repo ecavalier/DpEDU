@@ -1,0 +1,18 @@
+@(item:  Option[model.ScheduleItem])
+<div id="item" >
+    @if(!item.isEmpty) {
+
+        @defining(model.Subject.find(item.get.subject.toString)) {  subject=>
+            <div>Subject:<br/>@subject.get.name </div>
+
+        @defining(model.users.User.find(subject.get.teacher.toString).get.asInstanceOf[model.users.Teacher]) {  teacher=>
+            <div>Teacher:<br/>@teacher.fullName<br/></div>
+        }
+
+        }
+        @defining(model.Room.find(item.get.room.toString).get) {  room=>
+            <div>Room:<br/>@room.name<br/></div>
+        }
+    }
+</div>
+

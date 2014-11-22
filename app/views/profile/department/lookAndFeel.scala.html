@@ -1,9 +1,8 @@
 @()(implicit session: play.api.mvc.Session, req: RequestHeader)
-@import controllers.dean.DeanController
-@import controllers.dean.DeanController
     @user= @{model.users.User.findByEmail(session.get("username").get).get.asInstanceOf[model.users.DepartmentManager]}
 <div class="row">
-@helper.form(action = routes.DepartmentController.updateProfile(), 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
+@helper.form(action = controllers.department.routes.ProfileController.updateProfile(), 'class -> "form-horizontal",
+    'enctype -> "multipart/form-data") {
     <div class="col-md-6">
         <div class="form-group">
             <label for="email"  class="control-label col-md-2">Email</label>
@@ -33,12 +32,12 @@
     <div class="col-md-6">
         <img   id="uploadFile"
         @if(user.avatar != "@routes.Assets.at(\"images/anonymous.jpg\")"){
-            src = "@Application.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
+            src = "@routes.Application.picture(user.avatar)"}else{src = "@routes.Assets.at("images/anonymous.jpg")"}
             style="width : 120px; height: 120px" class="img-circle"> <br/>
         <div class="fileUpload btn btn-primary">
             <span>Upload</span>
             <input  class="upload" onchange="showMyImage(this)" type="file" id="uploadBtn"  name="avatar"
-            value="@Application.picture(user.avatar)">
+            value="@routes.Application.picture(user.avatar)">
         </div>
 
     </div>
