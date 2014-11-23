@@ -4,15 +4,15 @@ import model.ScheduleItem
 import org.bson.types.ObjectId
 import play.api.data.Form
 import play.api.data.Forms._
-import com.lowagie.text.{Font, Chunk, Element, Document}
-import com.lowagie.text.pdf.{BaseFont, PdfWriter}
 import java.io._
+import org.apache.commons.io.IOUtils
+import scala.collection.JavaConverters._
 import model.users.Student
 import model.users.DeanManager
 import model.users.Teacher
-import org.apache.commons.io.IOUtils
-import com.lowagie.text.html.simpleparser.HTMLWorker
-import scala.collection.JavaConverters._
+import com.itextpdf.text.pdf.PdfWriter
+import com.itextpdf.text.Document
+import com.itextpdf.tool.xml.XMLWorkerHelper
 
 
 object ScheduleController extends DeanController {
@@ -72,27 +72,21 @@ object ScheduleController extends DeanController {
   def schedulePDF(group: String, week: String) = withUser(Array[Class[_]](DeanManager.getClass, Student.getClass,
     Teacher.getClass)) { user => implicit request =>
       val document = new Document()
-      val stream =  new ByteArrayOutputStream()
+
+    val stream =  new ByteArrayOutputStream()
       val f=File.createTempFile("schedule", ".pdf")
-      PdfWriter.getInstance(document, stream)
+      val writer = PdfWriter.getInstance(document, stream)
+
       document.open()
-      val objects = HTMLWorker.parseToList(
-        new StringReader(views.html.profile.dean.shedule.pdf(
-          new ObjectId(group), week.toInt).toString()), null).asScala
 
-        for (element <- objects){
-            document.add(element.asInstanceOf[Element])
-          }
+      val is = new ByteArrayInputStream(views.html.profile.dean.shedule.pdf(
+               new ObjectId(group), week.toInt).toString().getBytes)
+      XMLWorkerHelper.getInstance().parseXHtml(writer, document, is)
 
-      val courier = BaseFont.createFont(BaseFont.COURIER, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-      val font = new Font(courier, 12, Font.NORMAL)
-      val chunk = new Chunk("",font)
-      document.add(chunk)
       document.close()
       val outputStream = new ByteArrayInputStream(stream.toByteArray)
-
       val out = new FileOutputStream(f)
-      IOUtils.copy(outputStream, out);
+      IOUtils.copy(outputStream, out)
 
       Ok.sendFile(f)
   }
