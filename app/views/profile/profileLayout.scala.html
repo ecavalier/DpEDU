@@ -1,12 +1,18 @@
 @(user: model.users.User)(menu: Html)(content: Html)
 <html lang="en">
     <head>
+        <meta name="google-site-verification" content="TSSMWgQh83mLnZ-a0zeFTmQJ9SEEcOvgHwLdj-3OLN4" />
         @views.html.profile.styles(user.theme)
         @views.html.profile.scripts()
         <title>Profile</title>
     </head>
 
-    <body>
+    <body contextmenu="menu">
+
+        <menu type="context" id="menu">
+            <menuitem label="Help" onclick="openHelp()" icon="@routes.Assets.at("images/help.png")"></menuitem>
+         </menu>
+
         @views.html.profile.header(user)
         <div id="wrapper">
             @menu
