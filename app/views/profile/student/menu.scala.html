@@ -4,6 +4,9 @@
         <li id="mSchedule">
             <a href="@controllers.student.routes.ScheduleController.viewSchedule()">Schedule</a>
         </li>
+        <li id="mTeacher">
+            <a href="@controllers.student.routes.TeacherSearch.viewTeachers()">Teacher Search</a>
+        </li>
         <li id="mProfile">
             <a href="@controllers.student.routes.ProfileController.openLookAndFeel()">Profile</a>
         </li>
@@ -14,8 +17,11 @@
 $(document).ready(function() {
 var pathname = window.location.pathname
 
-if(pathname.indexOf("shedule") >= 0){
+    if(pathname.indexOf("shedule") >= 0){
         $("#mSchedule").addClass("active");
+    }
+    if(pathname.indexOf("teacher") >= 0){
+        $("#mTeacher").addClass("active");
     }
     if(pathname.indexOf("lookAndFeel") >= 0){
         $("#mProfile").addClass("active");

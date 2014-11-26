@@ -8,6 +8,8 @@ import model.mongoContext
 import mongoContext._
 import com.mongodb.casbah.Imports
 import org.jasypt.util.text.BasicTextEncryptor
+import org.bson.types.ObjectId
+import com.mongodb.casbah.commons.TypeImports.ObjectId
 
 trait User {
   val id: ObjectId
@@ -52,4 +54,6 @@ object User extends ModelCompanion[User, ObjectId] {
   }
 
   def delete(id: String) =  dao.remove(MongoDBObject("_id" -> new ObjectId(id)))
+
+  def findTeachers = User.find(MongoDBObject("_t" -> "model.users.Teacher")).toList.asInstanceOf[List[Teacher]]
 }

@@ -31,4 +31,12 @@ object Room extends ModelCompanion[Room, ObjectId] {
   def find(id: String) = dao.findOneById(new ObjectId(id))
 
   def delete(id: String) =  dao.remove(MongoDBObject("_id" -> new ObjectId(id)))
+
+  def findFreeRooms(day: Int, week: Int) : List[Room] = {
+    val builder = MongoDBObject.newBuilder
+    builder += "day" -> day
+    builder += "week" -> week
+    val ids = ScheduleItem.find(builder.result()).toList.map(_.room)
+    Room.find(MongoDBObject("_id"-> DBObject("$nin"->ids))).toList
+  }
 }

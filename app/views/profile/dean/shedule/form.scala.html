@@ -20,9 +20,15 @@
             <label for="room" class="control-label col-md-2">Room</label>
             <div class="col-md-8">
                 <select id="room" name="room" class="form-control">
-                @for(r <- model.Room.findAll()) {
+                @if(!model.Room.findFreeRooms(day, week).isEmpty){
+                @for(r <- model.Room.findFreeRooms(day, week)) {
                     <option value="@r.id" @if(item != null && item.room == r.id){selected}>@r.name</option>
+                }   }else{
+                    @if(item != null){
+                        <option value="@item.room" selected>@model.Room.find(item.room.toString).get.name</option>
+                    }
                 }
+
                 </select>
             </div>
         </div>

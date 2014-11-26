@@ -5,8 +5,7 @@ import com.novus.salat.dao._
 import com.mongodb.casbah.Imports._
 import se.radley.plugin.salat._
 import mongoContext._
-import com.mongodb.BasicDBObject
-import com.mongodb.casbah.commons.TypeImports.BasicDBObject
+import model.users.{Teacher, User, Student}
 
 
 case class ScheduleItem(id: ObjectId = new ObjectId,
@@ -35,4 +34,16 @@ object ScheduleItem extends ModelCompanion[ScheduleItem, ObjectId] {
       "week" -> week,
       "lecture" -> lecture))
   }
+
+  def filterTeacher(filter: TeacherFilter): List[ScheduleItem] = {
+    val builder = MongoDBObject.newBuilder
+    builder += "day" -> filter.day
+    builder += "week" -> filter.week
+    builder +=  "subject"-> DBObject("$in"->Subject.find(MongoDBObject("teacher"->filter.teacherId)).toList.map(_.id))
+    ScheduleItem.find(builder.result()).toList
+  }
 }
+
+case class TeacherFilter( teacherId: ObjectId,
+                          day: Int,
+                          week: Int)

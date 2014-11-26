@@ -3,95 +3,97 @@
 # ~~~~
 
 # Home page
-GET             /                                                                controllers.Application.index
-GET             /login                                                           controllers.LoginController.login
-GET             /logout                                                          controllers.LoginController.logOut
-GET             /auth                                                            controllers.LoginController.reAuth
+GET         /                                                                controllers.Application.index
+GET         /login                                                           controllers.LoginController.login
+GET         /logout                                                          controllers.LoginController.logOut
+GET         /auth                                                            controllers.LoginController.reAuth
 #Dean Section###################################################################################################
-GET             /dean/departments                                                controllers.dean.DepartmentController.departmentList()
-POST            /dean/departments/insert                                         controllers.dean.DepartmentController.insertDepartment()
-GET             /dean/departments/remove/:id                                     controllers.dean.DepartmentController.deleteDepartment(id)
-GET             /dean/departments/update/:id                                     controllers.dean.DepartmentController.saveDepartment(id)
-GET             /dean/departments/updateDepartmentForm/:id                       controllers.dean.DepartmentController.getDepartmentEditForm(id)
-GET             /dean/departments/updateManagerForm/:id                          controllers.dean.DepartmentController.getManagerEditForm(id)
-POST            /dean/departments/saveManager/:id                                controllers.dean.DepartmentController.saveManager(id)
-GET             /dean/departments/deatils/:id                                    controllers.dean.DepartmentController.detailsDepartment(id)
-POST            /dean/departments/addManager/:id                                 controllers.dean.DepartmentController.addManager(id)
-GET             /dean/departments/removeManager/:id                              controllers.dean.DepartmentController.removeManager(id)
+GET         /dean/departments                                                controllers.dean.DepartmentController.departmentList()
+POST        /dean/departments/insert                                         controllers.dean.DepartmentController.insertDepartment()
+GET         /dean/departments/remove/:id                                     controllers.dean.DepartmentController.deleteDepartment(id)
+GET         /dean/departments/update/:id                                     controllers.dean.DepartmentController.saveDepartment(id)
+GET         /dean/departments/updateDepartmentForm/:id                       controllers.dean.DepartmentController.getDepartmentEditForm(id)
+GET         /dean/departments/updateManagerForm/:id                          controllers.dean.DepartmentController.getManagerEditForm(id)
+POST        /dean/departments/saveManager/:id                                controllers.dean.DepartmentController.saveManager(id)
+GET         /dean/departments/deatils/:id                                    controllers.dean.DepartmentController.detailsDepartment(id)
+POST        /dean/departments/addManager/:id                                 controllers.dean.DepartmentController.addManager(id)
+GET         /dean/departments/removeManager/:id                              controllers.dean.DepartmentController.removeManager(id)
 
-GET             /dean/rooms                                                      controllers.dean.RoomsController.roomsList()
-POST            /dean/rooms/insert                                               controllers.dean.RoomsController.addRoom()
-POST            /dean/rooms/update/:id                                           controllers.dean.RoomsController.saveRoom(id)
-GET             /dean/rooms/updateRoomForm/:id                                   controllers.dean.RoomsController.getRoomEditForm(id)
-GET             /dean/rooms/remove/:id                                           controllers.dean.RoomsController.removeRoom(id)
+GET         /dean/rooms                                                      controllers.dean.RoomsController.roomsList()
+POST        /dean/rooms/insert                                               controllers.dean.RoomsController.addRoom()
+POST        /dean/rooms/update/:id                                           controllers.dean.RoomsController.saveRoom(id)
+GET         /dean/rooms/updateRoomForm/:id                                   controllers.dean.RoomsController.getRoomEditForm(id)
+GET         /dean/rooms/remove/:id                                           controllers.dean.RoomsController.removeRoom(id)
 
-GET             /dean/student                                                    controllers.dean.StudentSearchController.searchStudent()
-GET             /dean/student/remove/:id                                         controllers.dean.StudentSearchController.removeStudent(id)
-GET             /dean/student/restore/:id                                        controllers.dean.StudentSearchController.restoreStudent(id)
-GET             /dean/student/list                                               controllers.dean.StudentSearchController.searchStudentRender()
-
-
-GET             /dean/student/schedule                                           controllers.dean.ScheduleController.openSchedule()
-GET             /dean/student/schedule/form                                      controllers.dean.ScheduleController.getScheduleForm()
-GET             /dean/student/schedule/table                                     controllers.dean.ScheduleController.getShowTable()
-POST            /dean/student/schedule/insert                                    controllers.dean.ScheduleController.addScheduleItem()
-GET             /dean/student/schedule/save/:id                                  controllers.dean.ScheduleController.saveScheduleItem(id)
-
-GET             /dean/schedule/pdf/:g/:w                                         controllers.dean.ScheduleController.schedulePDF(g, w)
+GET         /dean/student                                                    controllers.dean.StudentSearchController.searchStudent()
+GET         /dean/student/remove/:id                                         controllers.dean.StudentSearchController.removeStudent(id)
+GET         /dean/student/restore/:id                                        controllers.dean.StudentSearchController.restoreStudent(id)
+GET         /dean/student/list                                               controllers.dean.StudentSearchController.searchStudentRender()
 
 
-GET             /dean/lookAndFeel                                                controllers.dean.ProfileController.openLookAndFeel()
-GET             /dean/profile/:id                                                controllers.dean.ProfileController.profileInit(id)
-POST            /dean/updateProfile                                              controllers.dean.ProfileController.updateProfile()
+GET         /dean/student/schedule                                           controllers.dean.ScheduleController.openSchedule()
+GET         /dean/student/schedule/form                                      controllers.dean.ScheduleController.getScheduleForm()
+GET         /dean/student/schedule/table                                     controllers.dean.ScheduleController.getShowTable()
+POST        /dean/student/schedule/insert                                    controllers.dean.ScheduleController.addScheduleItem()
+GET         /dean/student/schedule/save/:id                                  controllers.dean.ScheduleController.saveScheduleItem(id)
 
-GET             /picture/:name                                                   controllers.Application.picture(name: String)
+GET         /dean/schedule/pdf/:g/:w                                         controllers.dean.ScheduleController.schedulePDF(g, w)
+
+
+GET         /dean/lookAndFeel                                                controllers.dean.ProfileController.openLookAndFeel()
+GET         /dean/profile/:id                                                controllers.dean.ProfileController.profileInit(id)
+POST        /dean/updateProfile                                              controllers.dean.ProfileController.updateProfile()
+
+GET         /picture/:name                                                   controllers.Application.picture(name: String)
 #################################################################################################################
 
 #Department Section###################################################################################################
-POST            /department/updateProfile                                        controllers.department.ProfileController.updateProfile()
-GET             /department/lookAndFeel                                          controllers.department.ProfileController.openLookAndFeel()
-GET             /department/profile/:id                                          controllers.department.ProfileController.profileInit(id)
+POST        /department/updateProfile                                        controllers.department.ProfileController.updateProfile()
+GET         /department/lookAndFeel                                          controllers.department.ProfileController.openLookAndFeel()
+GET         /department/profile/:id                                          controllers.department.ProfileController.profileInit(id)
 
-GET             /department/teachers                                             controllers.department.TeacherController.teacherList()
-POST            /department/teachers/insert                                      controllers.department.TeacherController.addTeacher()
-GET             /department/teachers/updateTeacherForm/:id                       controllers.department.TeacherController.getTeacherEditForm(id)
-POST            /department/teachers/saveTeacher/:id                             controllers.department.TeacherController.saveTeacher(id)
-GET             /department/teachers/remove/:id                                  controllers.department.TeacherController.removeTeacher(id)
+GET         /department/teachers                                             controllers.department.TeacherController.teacherList()
+POST        /department/teachers/insert                                      controllers.department.TeacherController.addTeacher()
+GET         /department/teachers/updateTeacherForm/:id                       controllers.department.TeacherController.getTeacherEditForm(id)
+POST        /department/teachers/saveTeacher/:id                             controllers.department.TeacherController.saveTeacher(id)
+GET         /department/teachers/remove/:id                                  controllers.department.TeacherController.removeTeacher(id)
 
-GET             /department/groups/                                              controllers.department.GroupController.groupList()
-POST            /department/groups/insert                                        controllers.department.GroupController.addGroup()
-GET             /department/groups/remove/:id                                    controllers.department.GroupController.removeGroup(id)
-GET             /department/groups/update/:id                                    controllers.department.GroupController.saveGroup(id)
-GET             /department/groups/:id                                           controllers.department.GroupController.groupDetails(id)
+GET         /department/groups/                                              controllers.department.GroupController.groupList()
+POST        /department/groups/insert                                        controllers.department.GroupController.addGroup()
+GET         /department/groups/remove/:id                                    controllers.department.GroupController.removeGroup(id)
+GET         /department/groups/update/:id                                    controllers.department.GroupController.saveGroup(id)
+GET         /department/groups/:id                                           controllers.department.GroupController.groupDetails(id)
 
-POST            /department/groups/student/insert/:id                            controllers.department.StudentController.addStudent(id)
-GET             /department/groups/student/remove/:groupId/:id                   controllers.department.StudentController.removeStudent(id, groupId)
-POST            /department/groups/student/save/:groupId/:id                     controllers.department.StudentController.saveStudent(id, groupId)
-GET             /department/groups/student/updateStudentForm/:groupId/:id        controllers.department.StudentController.getStudentEditForm(id, groupId)
+POST        /department/groups/student/insert/:id                            controllers.department.StudentController.addStudent(id)
+GET         /department/groups/student/remove/:groupId/:id                   controllers.department.StudentController.removeStudent(id, groupId)
+POST        /department/groups/student/save/:groupId/:id                     controllers.department.StudentController.saveStudent(id, groupId)
+GET         /department/groups/student/updateStudentForm/:groupId/:id        controllers.department.StudentController.getStudentEditForm(id, groupId)
 
-GET             /department/plans                                                controllers.department.StudyPlanController.planGroupList()
-GET             /department/plans/:id                                            controllers.department.StudyPlanController.planList(id)
-POST            /department/plans/:id/insert                                     controllers.department.StudyPlanController.addSubject(id)
-POST            /department/plans/update/:id                                     controllers.department.StudyPlanController.saveSubject(id)
-GET             /department/plans/:groupId/remove/:id                            controllers.department.StudyPlanController.removeSubject(id, groupId)
-GET             /department/plans/updateStudentForm/:id                          controllers.department.StudyPlanController.getSubjectEditForm(id)
+GET         /department/plans                                                controllers.department.StudyPlanController.planGroupList()
+GET         /department/plans/:id                                            controllers.department.StudyPlanController.planList(id)
+POST        /department/plans/:id/insert                                     controllers.department.StudyPlanController.addSubject(id)
+POST        /department/plans/update/:id                                     controllers.department.StudyPlanController.saveSubject(id)
+GET         /department/plans/:groupId/remove/:id                            controllers.department.StudyPlanController.removeSubject(id, groupId)
+GET         /department/plans/updateStudentForm/:id                          controllers.department.StudyPlanController.getSubjectEditForm(id)
 #################################################################################################################
 
 #Student Section###################################################################################################
-GET             /student/profile/:id                                             controllers.student.ProfileController.profileInit(id)
-GET             /student/shedule                                                 controllers.student.ScheduleController.viewSchedule()
-GET             /student/lookAndFeel                                             controllers.student.ProfileController.openLookAndFeel()
-POST            /student/updateProfile                                           controllers.student.ProfileController.updateProfile()
+GET         /student/profile/:id                                             controllers.student.ProfileController.profileInit(id)
+GET         /student/shedule                                                 controllers.student.ScheduleController.viewSchedule()
+GET         /student/lookAndFeel                                             controllers.student.ProfileController.openLookAndFeel()
+POST        /student/updateProfile                                           controllers.student.ProfileController.updateProfile()
+GET         /student/teacher/searchTeacherView/                              controllers.student.TeacherSearch.viewTeachers()
+GET         /student/teacher/searchTeacher/                                  controllers.student.TeacherSearch.searchTeacher()
 #################################################################################################################
 
-GET             /teacher/profile/:id                                             controllers.teacher.ProfileController.profileInit(id)
-GET             /teacher/shedule                                                 controllers.teacher.ScheduleController.viewSchedule()
-GET             /teacher/lookAndFeel                                             controllers.teacher.ProfileController.openLookAndFeel()
-POST            /teacher/updateProfile                                           controllers.teacher.ProfileController.updateProfile()
-GET             /teacher/schedule/table                                          controllers.teacher.ScheduleController.getShowTable()
+GET         /teacher/profile/:id                                             controllers.teacher.ProfileController.profileInit(id)
+GET         /teacher/shedule                                                 controllers.teacher.ScheduleController.viewSchedule()
+GET         /teacher/lookAndFeel                                             controllers.teacher.ProfileController.openLookAndFeel()
+POST        /teacher/updateProfile                                           controllers.teacher.ProfileController.updateProfile()
+GET         /teacher/schedule/table                                          controllers.teacher.ScheduleController.getShowTable()
 
-GET             /feed                                                            controllers.FeedController.openFeed()
-GET             /feed/insert                                                     controllers.FeedController.addFeed()
+GET         /feed                                                            controllers.FeedController.openFeed()
+GET         /feed/insert                                                     controllers.FeedController.addFeed()
 # Map static resources from the /public folder to the /assets URL path
-GET             /assets/*file                                                    controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                                    controllers.Assets.at(path="/public", file)
 

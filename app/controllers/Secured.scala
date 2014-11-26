@@ -2,6 +2,8 @@ package controllers
 
 import play.api.mvc._
 import model.users.User
+import play.api.Logger
+import org.joda.time.DateTime
 
 
 trait Secured {
@@ -18,11 +20,8 @@ trait Secured {
     }
   }
 
-  /**
-   * This method shows how you could wrap the withAuth method to also fetch your user
-   * You will need to implement UserDAO.findOneByUsername
-   */
   def withUser(f: User => Request[AnyContent] => Result) = withAuth { username => implicit request =>
+    writeToLog(request, username)
     User.findByEmail(username).map { user =>
       if(role contains (user.getClass.getName+"$")){
         f(user)(request)
@@ -34,6 +33,7 @@ trait Secured {
 
   def withUser(currentRole: Array[Class[_]])(f: User => Request[AnyContent] => Result) = withAuth { username =>
     implicit request =>
+    writeToLog(request, username)
     User.findByEmail(username).map { user =>
       val x = currentRole.map(_.getName)
       if(x contains (user.getClass.getName+"$")){
@@ -43,4 +43,8 @@ trait Secured {
       }
     }.getOrElse(onUnauthorized(request))
   }
+
+  def writeToLog(request: Request[AnyContent], username: String) =
+    Logger.info("\nGetting request with uri:" + request.uri + "\nfrom user " + username + "\nip:" +  request
+      .remoteAddress + "\n" + DateTime.now())
 }

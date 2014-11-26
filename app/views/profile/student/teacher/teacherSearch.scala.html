@@ -1,0 +1,85 @@
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Students</div>
+        <div class="panel-body">
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="teacher" class="control-label ">Teacher</label>
+                        <select id="teacher" name="teacher" class="form-control">
+                        @for(t <- model.users.User.findTeachers) {
+                            <option value="@t.id">@t.fullName</option>
+                        }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="week" class="control-label ">Week</label>
+                        <select id="week" name="week" class="form-control">
+                            <option value="0">First Week</option>
+                            <option value="1">Second Week</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="day" class="control-label ">Week</label>
+                        <select id="day" name="day" class="form-control">
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group col-md-6">
+                        <a onclick="onSearch()" class="btn btn-success">Search</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">Search Results</div>
+        <div id="content">
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function() {
+        getTable()
+    });
+
+    function onSearch(){
+        getTable()
+    }
+
+    function getTable(){
+        $.get(
+            "/student/teacher/searchTeacher/?"+
+            "teacher="+$("#teacher").val()+"&"+
+            "week="+$("#week").val()+"&"+
+            "day="+$("#day").val(),
+
+            function(data) {$("#content" ).html(data);},
+            "html"
+        );
+
+    }
+</script>

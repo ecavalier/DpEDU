@@ -1,0 +1,45 @@
+@(items: List[model.ScheduleItem])
+
+<style type="text/css">
+    td:hover{
+        cursor: pointer;
+        background: #e5e5e5;
+        color: #000000;
+    }
+</style>
+<table id="schedule" class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="col-md-2">Lecture</th>
+            <th>Room</th>
+        </tr>
+    </thead>
+
+    <tr>
+        <th class="col-md-2">#1</th>
+        <td id="11">@if(!items.find(s=> s.lecture == 1).isEmpty){
+            @model.Room.find(items.find(s=> s.lecture == 1).get.room.toString).get.name
+        } </td>
+    </tr>
+
+    <tr>
+        <th class="col-md-2">#2</th>
+        <td id="21">@items.find(s=> s.lecture == 2).getOrElse("")</td>
+    </tr>
+
+    <tr>
+        <th class="col-md-2">#3</th>
+        <td id="31">@items.find(s=> s.lecture == 3).getOrElse("")</td>
+    </tr>
+
+    <tr>
+        <th class="col-md-2">#4</th>
+        <td id="41">@items.find(s=> s.lecture == 4).getOrElse("")</td>
+    </tr>
+
+    <tr>
+        <th class="col-md-2">#5</th>
+        <td id="51">@items.find(s=> s.lecture == 5).getOrElse("")</td>
+    </tr>
+</table>
+

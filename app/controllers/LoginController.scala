@@ -36,8 +36,6 @@ object LoginController extends Controller {
       if(!loginForm.bindFromRequest().hasErrors){
         val (username, password) = loginForm.bindFromRequest().get
         currentUser = User.findByEmail(username).get
-        println(password)
-        println(currentUser.password)
         if(password == currentUser.password){
           auth
         }else{
