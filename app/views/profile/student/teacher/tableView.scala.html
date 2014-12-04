@@ -18,28 +18,41 @@
     <tr>
         <th class="col-md-2">#1</th>
         <td id="11">@if(!items.find(s=> s.lecture == 1).isEmpty){
+            @model.Subject.find(items.find(s=> s.lecture == 1).get.subject.toString).get.name<br/>
             @model.Room.find(items.find(s=> s.lecture == 1).get.room.toString).get.name
         } </td>
     </tr>
 
     <tr>
         <th class="col-md-2">#2</th>
-        <td id="21">@items.find(s=> s.lecture == 2).getOrElse("")</td>
+        <td id="21">@if(!items.find(s=> s.lecture == 2).isEmpty){
+            @model.Subject.find(items.find(s=> s.lecture == 2).get.subject.toString).get.name<br/>
+            @model.Room.find(items.find(s=> s.lecture == 2).get.room.toString).get.name
+        }</td>
     </tr>
 
     <tr>
         <th class="col-md-2">#3</th>
-        <td id="31">@items.find(s=> s.lecture == 3).getOrElse("")</td>
+        <td id="31">@if(!items.find(s=> s.lecture == 3).isEmpty){
+            @model.Subject.find(items.find(s=> s.lecture == 3).get.subject.toString).get.name<br/>
+            @model.Room.find(items.find(s=> s.lecture == 3).get.room.toString).get.name
+        }</td>
     </tr>
 
     <tr>
         <th class="col-md-2">#4</th>
-        <td id="41">@items.find(s=> s.lecture == 4).getOrElse("")</td>
+        <td id="41">@if(!items.find(s=> s.lecture == 4).isEmpty){
+            @model.Subject.find(items.find(s=> s.lecture == 4).get.subject.toString).get.name<br/>
+            @model.Room.find(items.find(s=> s.lecture == 4).get.room.toString).get.name
+        }</td>
     </tr>
 
     <tr>
         <th class="col-md-2">#5</th>
-        <td id="51">@items.find(s=> s.lecture == 5).getOrElse("")</td>
+        <td id="51">@if(!items.find(s=> s.lecture == 5).isEmpty){
+            @model.Subject.find(items.find(s=> s.lecture == 5).get.subject.toString).get.name<br/>
+            @model.Room.find(items.find(s=> s.lecture == 5).get.room.toString).get.name
+        }</td>
     </tr>
 </table>
 
