@@ -1,7 +1,10 @@
 @(title: String, id: String, btn: String, student: model.users.Student, action: Call)(implicit session: play.api.mvc.Session)
 @views.html.profile.genericForm(title, id){
     @helper.form(action = action, 'class -> "form-horizontal", 'enctype -> "multipart/form-data") {
-        <div class="col-md-6">
+        <div class="col-md-6" contextmenu="menuHelp">
+            <menu type="context" id="menuHelp">
+                <menuitem label="Help" onclick="showHelp()" icon="@routes.Assets.at("images/help.png")"></menuitem>
+            </menu>
             <br/>
             <div class="form-group">
                 <div class="col-md-12">
@@ -103,5 +106,37 @@ aImg.src = e.target.result;
 })(img);
 reader.readAsDataURL(file);
 }
+}
+</script>
+
+
+<script type="text/javascript">
+
+function showHelp() {
+
+    var help = "department/out/Newtopic4.html#formHelp"
+
+    var h = 400;
+    var w = 1000;
+    var title = 'help'
+
+    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;
+    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;
+
+    width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+    height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+    var left = ((width / 2) - (w / 2)) + dualScreenLeft;
+    var top = ((height / 2) - (h / 2)) + dualScreenTop;
+
+    var url =  '@routes.Assets.at("help/")'+help;
+    var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
+
+    if (window.focus) {
+    newWindow.focus();
+    }
+
+    return false;
+
 }
 </script>
